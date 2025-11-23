@@ -1,0 +1,130 @@
+.crud{
+   color: var(--primaryText);
+}
+
+.container{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   margin: 50px 0;
+   width: 100%;
+}
+
+.row1, .row2, .row3, .row4, .row5, .row6{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 80%;  
+   margin: 10px 0;
+}
+
+input{
+   border: none;
+   border-radius: 40px;
+   outline: none;
+   flex: 1;
+   height: 35px;
+   background-color: rgba(0, 0, 0, 0.849);
+   padding-left: 15px;
+   color: white;
+   transition: 0.5s;
+}
+
+input:placeholder{
+   color: var(--secondaryText);
+}
+
+input:focus{
+   scale: 1.05;
+   background-color: #000;
+} 
+
+.uploadBtn{
+   padding-top: 5px;
+   cursor: pointer;
+}
+
+.category{
+   border: none;
+   border-radius: 40px;
+   outline: none;
+   flex: 1;
+   height: 35px;
+   background-color: rgba(0, 0, 0, 0.849);
+   padding-left: 15px;
+   direction: rtl;
+   margin-left: 20px;
+   padding: 0 15px;
+   font-size: 1.3rem;
+   font-family: 'Noto Sans Arabic';
+   color: var(--primaryText);
+}
+
+.container button{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: none;
+   border-radius: 40px;
+   flex: 1;
+   height: 35px;
+   color: var(--primaryText);
+   font-size: 1.2rem;
+   background-color: rgb(0, 68, 255);
+   cursor: pointer;
+}
+
+.container button:hover{
+   background-color: #02599c;
+}
+
+.container button:active{
+   background-color: #02355c;
+}
+
+.displayProducts{
+   width: 80%;
+   margin: 0 auto;
+}
+
+.table
+{
+   border-collapse: collapse;
+   border-top: 2px solid white;  
+   margin-top: 30px;
+   padding-top: 15px;
+   width: 100%;
+}
+
+.column{
+   direction: rtl;
+}
+
+.tableBody button{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+th, td {
+   padding: 12px;
+   text-align: center;
+   border-bottom: 1px solid #ccc;
+   font-family: 'Noto Sans Arabic', sans-serif;
+   font-size: 1rem;
+}
+
+.imgDiv{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 15px;
+   display: none;
+}
+
+.itemNotFoundImg{
+   width: 250px; 
+   height: 250px;
+} 

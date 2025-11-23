@@ -1,0 +1,94 @@
+.navBar{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 112px;
+   background-color: var(--navBackgroundColor);
+   box-shadow: var(--navShadow);
+   z-index: 1000;
+}
+
+.left
+{
+   margin-left: 15px;
+   display: flex;
+   align-items: center;
+}
+
+.homeLink{
+   text-decoration: none;
+   color: var(--primaryText);
+   font-size: 2rem;
+   letter-spacing: 2px;
+}
+
+.homeLink:hover{
+   color: var(--linkHover);
+}
+
+.homeLink span{
+   color: var(--linkHover);
+}
+
+.mode{
+   border: 1px solid var(--borders);
+   border-radius: 50%;
+   margin-left: 10px;
+   cursor: pointer;
+}
+
+.dark, .light{
+   width: 40px;
+   height: 40px;
+   object-fit: cover;
+}
+
+.light{
+   display: none;
+}
+
+.middle{
+   width: 50%;
+}
+
+.adminLink{
+   margin-left: 15px;
+   text-decoration: none;
+   color: white;
+   font-size: 1.7rem;
+   background-color: black;
+   width: 40px;
+   height: 40px;
+   vertical-align: middle;
+   display: none;
+   align-items: center;
+   justify-content: center;
+   border-radius: 40px;
+}
+
+.right
+{
+   margin-right: 15px;
+   display: flex;
+   align-items: center;
+}
+
+.cart{
+   width: 100px;
+   height: 100px;
+   object-fit: cover;
+   border: none;
+   position: relative;
+}
+
+.itemsCount{
+   position: absolute;
+   font-size: 2.0rem;
+   top: 2px;
+   right: 15px;
+   color: #007bff;
+}

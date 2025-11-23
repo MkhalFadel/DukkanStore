@@ -1,42 +1,80 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+:root{
+  --backgroundColor: #f8f9fa;
+  --navBackgroundColor: #ffffff !important;
+  --primaryText: #212529;
+  --secondaryText: #6c757d;
+  --accent: #007bdb;
+  --linkHover: #005bb5;
+  --buttonText: #ffffff;
+  --card: #ffffff;
+  --borders: #8f959b;
+  --icons: #007bdb;
+  --arrows: #6c757d;
+  --navShadow: 0px 0px 10px rgba(0, 0, 0, 0.50);
+  --cardBackgroundColor: #f8f9fa;
+  --cardBorderColor: #e0e0e0;
+  --cardShadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --buttonBackgroundColor: #007bff;
+  --buttonTextColor: #ffffff;
+  --buttonHoverBackgroundColor: #0056b3;
+  --buttonActiveBackgroundColor: #014286;
+
+  --footerBackgroundColor: #f4f4f4;
+  --footerText: #33333333;
+  --footerLinks: #0077cc;
+  --footerLinksHover: #005fa3;
+  --footerBorder: #cccccc;
+}
+
+body.darkMode{
+  --backgroundColor: #121212;
+  --navBackgroundColor: #0B1E33;
+  --primaryText: #e9ecef;
+  --secondaryText: #adb5bd;
+  --accent: #00aeef;
+  --linkHover: #00cfff;
+  --buttonText: #ffffff;
+  --card: #1e1e1e;
+  --borders: #6583a1;
+  --icons: #00aeef;
+  --arrows: #ffffff;
+  --navShadow: 0px 0px 10px rgb(192, 190, 190);
+  --cardBackgroundColor: #161b22;
+  --cardBorderColor: #30363d;
+  --cardShadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+  --buttonBackgroundColor: #238636;
+  --buttonTextColor: #ffffff;
+  --buttonHoverBackgroundColor: #2ea043;
+  --buttonActiveBackgroundColor: #1e662b;
+  
+  --footerBackgroundColor: #121212;
+  --footerText: #e0e0e0;
+  --footerLinks: #3399ff;
+  --footerLinksHover: #66b3ff;
+  --footerBorder: #333333;
+}
+
+body{
+  background-color: var(--backgroundColor);
+  color: var(--primaryText);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+button, a{
+  transition: all 0.15s;
 }

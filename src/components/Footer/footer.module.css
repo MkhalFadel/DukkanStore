@@ -1,0 +1,71 @@
+.footer{
+   width: 100%;
+   height: 170px;
+   background-color: var(--navBackgroundColor);
+   box-shadow: var(--navShadow);
+}
+
+.infoFooter{
+   display: flex;
+   align-items: baseline;
+   justify-content: center;
+   padding-top: 25px;
+}
+
+.infoFooter div{
+   display: flex;
+   flex-direction: column;
+}
+
+.infoFooter div a{
+   text-decoration: none;
+   color: var(--primaryText);
+   display: flex;
+   align-items: center;
+   justify-content: start;
+   margin-top: 10px;
+}
+
+.left{
+   width: 50%;
+}
+
+.left p{
+   margin-top: 10px;
+}
+
+.right{
+   align-items: baseline;
+   justify-content: center;
+   flex-direction: row !important;
+}
+
+.socialsContainer{
+   align-items: center;
+}
+
+.socialsContainer a{
+   margin-top: 0px !important;
+}
+
+.pagesContainer{
+   display: flex;
+   align-items: center;
+   margin-left: 100px;
+}
+
+.infoFooter div a:hover{
+   color: blue;
+}
+
+.igIcon
+{
+   width: 30px;
+   height: 30px;
+   margin: 0;
+}
+
+.fbIcon{
+   width: 35px;
+   height: 35px;
+}
