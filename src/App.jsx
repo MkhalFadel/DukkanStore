@@ -9,6 +9,7 @@ export default function App()
 {
   const [theme, setTheme] = useState("dark");
   const [sidebar, setSidebar] = useState(false);
+  const [products, setProducts] = useState();
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -20,7 +21,7 @@ export default function App()
       <Route path="/" element={<Homepage theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} />} />
       <Route path="/cart" element={<Cart theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} />} />
       <Route path="/details" element={<Details theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} />} />
-      <Route path="admin" element={<Admin />} />
+      <Route path="admin" element={<Admin products={products} setProducts={setProducts} />} />
     </Routes>
   )
 }

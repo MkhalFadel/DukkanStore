@@ -1,65 +1,213 @@
 import styles from './admin.module.css'
+import {useEffect, useState} from 'react';
+import { addProducts, fetchProducts, updateProduct, deleteProduct } from '../../API/products';
+import { SuccessAlert, WarningAlert, PrimaryAlert, DotPulseLoader } from '@mkhalfadel/modoui-core';
 
-export default function Admin()
+export default function Admin({products, setProducts})
 {
+   const [product, setProduct] = useState({id: "", title: "", price: 0, category: "Plastics", image: ""})
+   const [productState, setProductState] = useState('adding');
+   const [displayFrozen, setDisplayFrozen] = useState(false); // Check if the products displayed are the frozen one or not
+   const [search, setSearch] = useState(""); // Search for a products
+   const [searchState, setSearchState] = useState('name'); // Decide if the search will be by the name or id
+   const [loading, setLoading] = useState(true); // Hide loader after fetching Products
+   const [alert, setAlert] = useState({adding: false, deleting: false, updating: false}) // Hide/Display Alert messages
+
+   useEffect(() => {
+      async function loadProducts()
+      {
+         const data = await fetchProducts();
+         const productsData = data || [];
+         setProducts(productsData);
+         setLoading(false)
+      }
+      
+      loadProducts()
+   }, [])
+
+   // Take the image object and convert it into base64 to store
+   function handleImageUpload(e)
+   {
+      const file = e.target.files[0];
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+         setProduct(p => ({...p, image: reader.result}));
+      }
+
+      reader.readAsDataURL(file);
+   }
+
+   // Display products
+   function displayProducts()
+   {
+      let filterdProducts;
+
+      if(displayFrozen)
+         filterdProducts = products.filter(p => p.isFrozen);
+      else if(!displayFrozen)
+         filterdProducts = products.filter(p => !p.isFrozen)
+
+      if(search)
+         filterdProducts = searchState === 'name' ? filterdProducts.filter(p => p.title.toLowerCase().includes(search.toLocaleLowerCase())):
+                                                   filterdProducts.filter(p => p.id.toLowerCase().includes(search.toLocaleLowerCase()))
+
+
+      return filterdProducts.map(p => (
+         <tr key={p.id}>
+            <td>{p.id}</td>
+            <td>{p.title}</td>
+            <td>{p.price}</td>
+            <td>{p.category}</td>
+            <td><button onClick={() => {handleFreezing(p.id, p.isFrozen)}} className={styles.freezeBtn}>{p.isFrozen ? "Unfreeze" : "Freeze"}</button></td>
+            <td><button onClick={() => handleProductUpdate(p.id)} className={styles.editBtn}>Edit</button></td>
+            <td><button onClick={() => handleDeleting(p.id)} className={styles.deleteBtn}>Delete</button></td>
+         </tr>
+      ))
+   }
+   
+   // Take the products to update and adds its values to the inputs
+   function handleProductUpdate(id)
+   {
+      setProductState('editing')
+      const productToUpdate = products.filter(p => p.id === id);
+      setProduct(p => ({id: productToUpdate[0].id,
+                        title: productToUpdate[0].title,
+                        price: productToUpdate[0].price,
+                        category: productToUpdate[0].category,
+      }))
+      console.log(product)
+   }
+
+   // Show alert messages depending on state
+   function handleAlerts(state)
+   {
+      if (state === "adding") {
+         setAlert(p => ({ ...p, adding: true }));
+         setTimeout(() => {
+            setAlert(p => ({ ...p, adding: false }));
+         }, 3000);
+      }
+
+      else if (state === "deleting") {
+         setAlert(p => ({ ...p, deleting: true }));
+         setTimeout(() => {
+            setAlert(p => ({ ...p, deleting: false }));
+         }, 3000);
+      }
+
+      else if (state === "updating") {
+         setAlert(p => ({ ...p, updating: true }));
+         setTimeout(() => {
+            setAlert(p => ({ ...p, updating: false }));
+         }, 3000);
+      }
+   }
+
+   // Decide what to do depending on if the user wants to update or add a products
+   async function handleProduct()
+   {
+      const itemId = products.filter(p => p.id === product.id);
+      if(productState === 'adding'){
+         const adding = await addProducts(product.title, product.price, product.category, product.image)
+         setProducts(p => ([...p, product]))
+         adding && setProduct(() => ({title: "", price: 0, image: '', category: ''}))
+         adding && handleAlerts("adding")
+      }
+      else{
+         const updating = updateProduct({id: product.id, title: product.title, price: product.price, category: product.category, image: product.image});
+         setProducts(products.filter(p => p.id === itemId[0].id));
+         setProducts(prev => ([...prev, product]))
+         setProduct(() => ({title: "", price: 0, image: '', category: ''}))
+         setProductState('adding')
+         updating && handleAlerts("updating")
+      }
+   }
+
+   // Handles Deleting a product
+   async function handleDeleting(id)
+   {
+      const deleting = await deleteProduct(id);
+      deleting && setProducts(products.filter(p => p.id !== id));
+      deleting && handleAlerts("deleting")
+   }
+
+   // Handles Freezing a product
+   async function handleFreezing(id, isFrozen)
+   {
+      const frezzing = updateProduct({id, isFrozen: !isFrozen});
+      frezzing && setProducts(product => product.map(p => p.id === id ? {...p, isFrozen: !isFrozen} : p))
+      frezzing && handleAlerts("updating");
+   }
+
    return(
       <div className={styles.container}>
-      <div className={styles.row1}>
-         <input placeholder="Product Name" type="text" className={styles.title} />
-      </div>
+         <div className={styles.alert}>
+            {alert.adding && <SuccessAlert text={"Item Added"} />}
+            {alert.deleting && <WarningAlert text={"An Item was Deleted"} />}
+            {alert.updating && <PrimaryAlert text={"Item Updated"} />}
+         </div>
+         <div className={styles.row1}>
+            <input placeholder="Product Name" value={product.title} type="text" className={styles.title} onChange={(e) => setProduct(p => ({...p, title: e.target.value}))} />
+         </div>
 
-      <div className={styles.row2}>
-         <input placeholder="Product Price" className={styles.price} type="number" />
-         <input className={styles.uploadBtn} style={{marginLeft: "15px"}} placeholder="Choose Image" type="file" accept="image/*" />
-         <select className={styles.category}>
-            <option value="Plastics">Plastics</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Toys">Toys</option>
-            <option value="Clothes">Clothes</option>
-            <option value="Decoration">Decoration</option>
-         </select>
-      </div>
+         <div className={styles.row2}>
+            <input placeholder="Product Price" value={product.price} className={styles.price} type="number" onChange={(e) => setProduct(p => ({...p, price: e.target.value}))} />
+            <input className={styles.uploadBtn} style={{marginLeft: "15px"}} placeholder="Choose Image" type="file" accept="image/*" onChange={(e) => handleImageUpload(e)} />
+            <select className={styles.category} value={product.category} onChange={(e) => setProduct(p => ({...p, category: e.target.value}))}>
+               <option value="Plastics">Plastics</option>
+               <option value="Electronics">Electronics</option>
+               <option value="Toys">Toys</option>
+               <option value="Clothes">Clothes</option>
+               <option value="Decoration">Decoration</option>
+            </select>
+         </div>
 
-      <div className={styles.row3}>
-         <button className={styles.addBtn}>Add Product</button>
-      </div>
+         <div className={styles.row3}>
+            <button className={styles.addBtn} onClick={() => handleProduct()}>{productState === 'adding' ? 'Add Products' : 'Update Product'}</button>
+         </div>
 
-      
-   <div className={styles.row4}>
-      <button className={styles.all}>All Products</button>
-      <button style={{marginLeft: "20px"}} className={styles.append}>Frozen Products</button>
-   </div>
+         
+         <div className={styles.row4}>
+            <button onClick={() => setDisplayFrozen(false)} className={`${!displayFrozen ? styles.picked : ""}`}>All Products</button>
+            <button onClick={() => setDisplayFrozen(true)} style={{marginLeft: "20px"}} className={`${displayFrozen ? styles.picked : ""}`}>Frozen Products</button>
+         </div>
 
-   <div className={styles.row6}>
-      <input placeholder="Search Product by Name" type="text" className={styles.search} />
-   </div>
+         <div className={styles.row6}>
+            <input placeholder={`Search Product by ${searchState === 'name' ? "Name" : 'ID'}`} value={search} onChange={(e) => {const search = e.target.value; setSearch(search)}} type="text" className={styles.search} />
+         </div>
 
-   <div className={styles.row6}>
-      <button className={styles.byId}>Search via ID</button>
-      <button style={{marginLeft: "20px"}} className={styles.byName}>Search via Name</button>
-   </div>
+         <div className={styles.row6}>
+            <button onClick={() => setSearchState('id')} className={`${searchState === 'id' ? styles.picked : ""}`}>Search via ID</button>
+            <button onClick={() => setSearchState('name')} style={{marginLeft: "20px"}} className={`${searchState === 'name' ? styles.picked : ""}`}>Search via Name</button>
+         </div>
 
-      <div className={styles.displayProducts}>
-         <table className={styles.table}>
-            <thead>
-               <tr className={styles.column}>
-                  <th>الحذف</th>
-                  <th>التعديل</th>
-                  <th>تعليق</th>
-                  <th>المجموعة</th>
-                  <th>السعر</th>
-                  <th>المنتج</th>
-                  <th>الـID</th>
-                  <th>No.</th>
-               </tr>
-            </thead>
+         <div className={styles.displayProducts}>
+            <table className={styles.table}>
+               <thead>
+                  <tr className={styles.column}>
+                     <th>ID</th>
+                     <th>Name</th>
+                     <th>Price</th>
+                     <th>Category</th>
+                     <th>Freeze</th>
+                     <th>Edit</th>
+                     <th>Delete</th>
+                  </tr>
+               </thead>
 
-            <tbody className={styles.tableBody}>
+               <tbody className={styles.tableBody}>
+                  {products && displayProducts()}
+               </tbody>
+
+
+            </table>
             
-            </tbody>
-
-         </table>
-      </div>
+            {loading && <div className={styles.loader}>
+               <DotPulseLoader />
+            </div>}
+         
+         </div>
 
    </div>
    )

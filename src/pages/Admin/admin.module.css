@@ -43,9 +43,11 @@ input:focus{
 .uploadBtn{
    padding-top: 5px;
    cursor: pointer;
+   vertical-align: middle;
 }
 
 .category{
+
    border: none;
    border-radius: 40px;
    outline: none;
@@ -53,11 +55,9 @@ input:focus{
    height: 35px;
    background-color: rgba(0, 0, 0, 0.849);
    padding-left: 15px;
-   direction: rtl;
    margin-left: 20px;
    padding: 0 15px;
    font-size: 1.3rem;
-   font-family: 'Noto Sans Arabic';
    color: var(--primaryText);
 }
 
@@ -128,3 +128,21 @@ th, td {
    width: 250px; 
    height: 250px;
 } 
+
+.picked{
+   border: 2px solid white !important;
+}
+
+.alert{
+   position: fixed;
+   top: 15px;
+   right: 15px;
+   z-index: 1000;
+}
+
+.loader{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   margin-top: 50px;
+}
