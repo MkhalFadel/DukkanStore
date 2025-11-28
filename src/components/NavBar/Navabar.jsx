@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import cartIcon from '../../assets/cart2.svg';
 import { GlowInput } from '@mkhalfadel/modoui-core';
 
-export default function Navbar({theme})
+export default function Navbar({theme, search, setSearch})
 {
    const props = {
       width: "100%",
@@ -23,7 +23,7 @@ export default function Navbar({theme})
          </div>
 
          <div className={styles.middle}>
-            <GlowInput props={props} placeholder={"Search Items..."} />
+            <GlowInput props={props} placeholder={"Search Items..."} value={search ?? ""} onChange={(e) => setSearch(e.target.value)} />
          </div>
          
          <div className="right">

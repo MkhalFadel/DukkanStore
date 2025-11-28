@@ -1,4 +1,98 @@
 .container{
    flex: 1 !important;
    min-height: 0;
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr 1fr;
+   justify-content: space-between;
+   gap: 40px 80px;
+   align-items: center;
+   width: 90%;
+   margin: 190px auto;
+}
+
+.itemCard{
+   background-color: var(--cardBackgroundColor);
+   width: 225px;
+   height: 382px;
+   border: 1px solid var(--cardShadow);
+   box-shadow: var(--navShadow);
+   border-radius: 7px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
+   text-align: center;
+   animation: identifier linear forwards;
+   animation-timeline: view();
+   animation-range: entry 0%;
+}
+
+@keyframes identifier{
+   from{
+      opacity: 0;
+      transform: translateY(40px) scale(0.1);
+   }
+   to{
+      opacity: 1;
+      transform: translateX(0px) scale(1);
+   }
+}
+
+.itemPic{
+   border-top-right-radius: 7px;
+   border-top-left-radius: 7px;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   max-height: 225px;
+}
+
+.itemName{
+   width: 95%;
+   margin: 5px auto 0;
+   font-size: 1.1rem;
+}
+
+.itemPrice{
+   font-size: 1.1rem;
+   margin: 5px 0 0 ;
+}
+
+.addBtn{
+   margin: 5px 0 15px;
+   border: none;
+   background-color: var(--buttonBackgroundColor);
+   color: var(--buttonTextColor);
+   border-radius: 40px;
+   width: 60%;
+   height: 40px;
+   cursor: pointer;
+   z-index: 2;
+}
+
+.addBtn:hover{
+   background-color: var(--buttonHoverBackgroundColor);
+}
+
+.addBtn:active{
+   background-color: var(--buttonActiveBackgroundColor);
+}
+
+.loader{
+   width: 100%;
+   height: 100%;
+   right: 40px;
+   top: -30px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   position: absolute;
+}
+
+.noResultsImg{
+   width: 200px;
+   height: 200px;
+   top: 170px;
+   align-self: center;
+   position: absolute;
 }
