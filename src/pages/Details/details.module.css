@@ -1,4 +1,95 @@
-.container{
+.container {
    flex: 1;
-   min-height: 0;
+   margin-top: 130px;
+   margin-bottom: 50px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 40px 20px;
+}
+
+.card {
+   display: flex;
+   gap: 40px;
+   padding: 30px;
+   width: 80%;
+   max-width: 900px;
+   border-radius: 16px;
+   background-color: var(--navBackgroundColor);
+   box-shadow: var(--navShadow);
+   border: 1px solid var(--borders);
+}
+
+.imageWrapper {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 40%;
+}
+
+.productPic {
+   width: 100%;
+   max-width: 300px;
+   height: auto;
+   object-fit: contain;
+   border-radius: 12px;
+}
+
+.info {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   width: 60%;
+}
+
+.name {
+   font-size: 2rem;
+   margin-bottom: 5px;
+   color: var(--primaryText);
+}
+
+.price {
+   font-size: 1.4rem;
+   margin-bottom: 20px;
+   font-weight: bold;
+}
+
+.meta {
+   color: var(--secondaryText);
+   margin-bottom: 25px;
+   line-height: 1.6rem;
+}
+
+.addBtn {
+   width: 100%;
+   padding: 12px;
+   border: none;
+   border-radius: 30px;
+   font-size: 1rem;
+   cursor: pointer;
+   color: var(--buttonTextColor);
+   background-color: var(--buttonBackgroundColor);
+   transition: 0.2s ease-in-out;
+}
+
+.addBtn:hover {
+   background-color: var(--buttonHoverBackgroundColor);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+   .card {
+      flex-direction: column;
+      text-align: center;
+   }
+
+   .imageWrapper,
+   .info {
+      width: 100%;
+   }
+
+   .productPic {
+      max-width: 250px;
+      margin-bottom: 20px;
+   }
 }

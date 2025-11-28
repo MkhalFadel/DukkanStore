@@ -25,6 +25,7 @@
    animation: identifier linear forwards;
    animation-timeline: view();
    animation-range: entry 0%;
+   cursor: pointer;
 }
 
 @keyframes identifier{

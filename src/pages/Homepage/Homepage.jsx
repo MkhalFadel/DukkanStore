@@ -8,11 +8,14 @@ import { fetchProducts } from '../../API/products.js'
 import notFound from '../../assets/notFound.svg';
 import noResults from '../../assets/itemNotFound.svg'
 import { DualRingLoader } from '@mkhalfadel/modoui-core'
+import { useNavigate } from 'react-router'
 
 export default function Homepage({theme, setTheme, sidebar, setSidebar, products, setProducts, productDetails, setProductDetails})
 {
    const [loading, setLoading] = useState(true);
    const [search, setSearch] = useState("");
+
+   const navigate = useNavigate();
 
    useEffect(() => {
       async function loadProducts()
@@ -30,10 +33,9 @@ export default function Homepage({theme, setTheme, sidebar, setSidebar, products
    {
       const product = products?.filter(p => p.id === id);
       setProductDetails(product[0]);
+      navigate('/details')
    }
-
-   console.log(productDetails)
-
+   
    function displayProducts()
    {
       const filteredProducts = search ? products.filter(p => p.title.toLowerCase().includes(search.toLowerCase())) : products;

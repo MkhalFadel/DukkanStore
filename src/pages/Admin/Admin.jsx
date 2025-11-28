@@ -109,13 +109,13 @@ export default function Admin({products, setProducts})
    {
       const itemId = products.filter(p => p.id === product.id);
       if(productState === 'adding'){
-         const adding = await addProducts(product.title, product.price, product.category, product.image)
+         const adding = await addProducts(product.title, Number(product.price).toFixed(2), product.category, product.image)
          setProducts(p => ([...p, product]))
          adding && setProduct(() => ({title: "", price: 0, image: '', category: ''}))
          adding && handleAlerts("adding")
       }
       else{
-         const updating = updateProduct({id: product.id, title: product.title, price: product.price, category: product.category, image: product.image});
+         const updating = updateProduct({id: product.id, title: product.title, price: Number(product.price).toFixed(2), category: product.category, image: product.image});
          setProducts(products.filter(p => p.id === itemId[0].id));
          setProducts(prev => ([...prev, product]))
          setProduct(() => ({title: "", price: 0, image: '', category: ''}))
