@@ -11,18 +11,32 @@ export default function App()
   const [sidebar, setSidebar] = useState(false);
   const [products, setProducts] = useState();
   const [productDetails, setProductDetails] = useState();
-
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const body = document.querySelector("body");
     theme === 'dark' ? body.classList.add("darkMode") : body.classList.remove("darkMode");
   },[theme])
 
+  function addToCart(id, e)
+  {
+    e.stopPropagation();
+    const exist = cart.find(p => p.id === id);
+    if(!exist)
+    {
+        const product = products.filter(p => p.id === id);
+        product[0].quantity = 1;
+        setCart(prev => [...prev, product[0]]);
+    }else{
+        setCart(cart => cart.map(p => p.id === id ? {...p, quantity: p.quantity + 1} : p))
+    }
+  }
+
   return(
     <Routes>
-      <Route path="/" element={<Homepage theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} products={products} setProducts={setProducts} productDetails={productDetails} setProductDetails={setProductDetails} />} />
-      <Route path="/cart" element={<Cart theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} />} />
-      <Route path="/details" element={<Details theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} productDetails={productDetails} setProductDetails={setProductDetails} />} />
+      <Route path="/" element={<Homepage theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} products={products} setProducts={setProducts} productDetails={productDetails} setProductDetails={setProductDetails} cart={cart} setCart={setCart} addToCart={addToCart} />} />
+      <Route path="/cart" element={<Cart theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} cart={cart} setCart={setCart} />} />
+      <Route path="/details" element={<Details theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} productDetails={productDetails} setProductDetails={setProductDetails} cart={cart} addToCart={addToCart} />} />
       <Route path="admin" element={<Admin products={products} setProducts={setProducts} />} />
     </Routes>
   )

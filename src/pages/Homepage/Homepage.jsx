@@ -10,9 +10,19 @@ import noResults from '../../assets/itemNotFound.svg'
 import { DualRingLoader } from '@mkhalfadel/modoui-core'
 import { useNavigate } from 'react-router'
 
-export default function Homepage({theme, setTheme, sidebar, setSidebar, products, setProducts, productDetails, setProductDetails})
+export default function Homepage({
+                                 theme,
+                                 setTheme,
+                                 sidebar,
+                                 setSidebar,
+                                 products,
+                                 setProducts,
+                                 productDetails,
+                                 setProductDetails,
+                                 cart,
+                                 addToCart})
 {
-   const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(products ? false : true);
    const [search, setSearch] = useState("");
 
    const navigate = useNavigate();
@@ -45,17 +55,19 @@ export default function Homepage({theme, setTheme, sidebar, setSidebar, products
             <img src={p.img ? p.img : notFound} className={styles.itemPic} style={{borderBottom: theme === 'light' ? "0.5px solid black" : ""}} />
             <p className={styles.itemName}>{p.title}</p>
             <p className={styles.itemPrice}>${p.price}</p>
-            <button className={styles.addBtn} onClick={e => e.stopPropagation()}>Add to Cart</button>
+            <button className={styles.addBtn} onClick={e => addToCart(p.id, e)}>Add to Cart</button>
          </div>
       ))
    }
+
+   console.log(cart)
 
    const productsEl = displayProducts();
 
    return(
       <>
          <Darkmode theme={theme} setTheme={setTheme}/>
-         <Navbar theme={theme} search={search} setSearch={setSearch} />
+         <Navbar theme={theme} search={search} setSearch={setSearch} cart={cart} />
          <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
          <main className={`${styles.container} ${productDetails && styles.details}`}>
             {productsEl}

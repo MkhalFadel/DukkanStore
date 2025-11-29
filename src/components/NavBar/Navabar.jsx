@@ -1,10 +1,19 @@
 import styles from './navbar.module.css';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import cartIcon from '../../assets/cart2.svg';
 import { GlowInput } from '@mkhalfadel/modoui-core';
+import { useEffect, useState } from 'react';
 
-export default function Navbar({theme, search, setSearch})
+export default function Navbar({theme, search, setSearch, cart})
 {
+   const [cartCounter, setCartCounter] = useState();
+
+   useEffect(() => {
+      let counter = 0;
+      cart.forEach(i => counter = counter + i.quantity)
+      setCartCounter(counter)
+   }, [cart])
+
    const props = {
       width: "100%",
       boxShadow: `${theme === 'dark' ? "rgb(44, 188, 255, 1)" : "rgba(0, 60, 255, 1)"} 0px 0px 25px`,
@@ -29,7 +38,7 @@ export default function Navbar({theme, search, setSearch})
          <div className="right">
             <Link to="/cart" className={styles.cartLink}>
                <img loading="lazy" src={cartIcon} className={styles.cart} />
-               <p className={styles.itemsCount}>0</p>
+               <p className={styles.itemsCount}>{cartCounter}</p>
             </Link>
          </div>   
    </nav>

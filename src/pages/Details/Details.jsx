@@ -6,12 +6,12 @@ import Sidebar from '../../components/Sidebar/Sidebar.jsx'
 import notFound from '../../assets/notFound.svg'
 
 
-export default function Details({theme, setTheme, sidebar, setSidebar, productDetails, setProductDetails})
+export default function Details({theme, setTheme, sidebar, setSidebar, productDetails, setProductDetails, cart, addToCart})
 {
    return(
       <>
          <Darkmode theme={theme} setTheme={setTheme}/>
-         <Navbar theme={theme} />
+         <Navbar theme={theme} cart={cart} />
          <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
          <main className={styles.container}>
             <div className={styles.card}>
@@ -33,7 +33,7 @@ export default function Details({theme, setTheme, sidebar, setSidebar, productDe
                      <p><strong>Category:</strong> {productDetails.category}</p>
                   </div>
 
-                  <button className={styles.addBtn}>
+                  <button className={styles.addBtn} onClick={(e) => addToCart(productDetails.id, e)}>
                      Add to Cart
                   </button>
                </div>
