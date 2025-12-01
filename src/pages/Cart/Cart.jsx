@@ -5,6 +5,8 @@ import Footer from '../../components/Footer/Footer.jsx'
 import Sidebar from '../../components/Sidebar/Sidebar.jsx'
 import notFound from '../../assets/notFound.svg';
 import { useEffect, useState } from 'react'
+import whatsappIcon from '../../assets/whatsapp icon.svg'
+import ScrollTop from '../../components/scrollTop/ScrollTop.jsx'
 
 export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCart})
 {
@@ -66,13 +68,30 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
          </div>
       </div>
    ))
-   
+
+   function checkout()
+   {
+      let message = '';
+      let total = 0;
+      const number = '96597977452';
+
+      cart.forEach(item => {
+         message += `-${item.title} x${item.quantity} $${item.price}\n`
+         total = (item.price * item.quantity) + total;
+      })
+
+      let totalMsg = `Total Price: $${total.toFixed(2)}`;
+
+      const url =  "https://wa.me/" + number + "?text=" + encodeURIComponent(message) + encodeURIComponent(totalMsg);
+      window.open(url, "_blank")
+   }
 
    return(
       <>
          <Darkmode theme={theme} setTheme={setTheme}/>
          <Navbar theme={theme} cart={cart} />
          <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
+         <ScrollTop />
          <main className={styles.container}>
             <div className={styles.sections}>
 
@@ -99,8 +118,8 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
                         <p>${pricing?.finalPrice.toFixed(2)}</p>
                      </div>
 
-                     <button className={styles.whatsappBtn}>
-                        <img src={null} className={styles.whatsappIcon} />
+                     <button onClick={checkout} className={styles.whatsappBtn}>
+                        <img src={whatsappIcon} className={styles.whatsappIcon} />
                         Checkout with WhatsApp
                      </button>
                   </div>

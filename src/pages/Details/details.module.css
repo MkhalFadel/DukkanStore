@@ -93,3 +93,15 @@
       margin-bottom: 20px;
    }
 }
+
+.alertContainer{
+   position: fixed;
+   bottom: -100px;
+   right: 20px;
+   z-index: 100;
+   transition: all ease-in-out 0.25s;
+}
+
+.alertContainer.showen{
+   bottom: 20px;
+}

@@ -4,14 +4,43 @@ import Darkmode from '../../components/DarkMode/DarkMode.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import Sidebar from '../../components/Sidebar/Sidebar.jsx'
 import notFound from '../../assets/notFound.svg'
+import { SuccessAlert } from '@mkhalfadel/modoui-core'
+import { useState } from 'react'
+
 
 
 export default function Details({theme, setTheme, sidebar, setSidebar, productDetails, setProductDetails, cart, addToCart})
 {
+
+   const [alertShowen, setAlertShowen] = useState(false);
+   const [alertTimer, setAlertTimer] = useState(0)
+
+   function showAlert()
+   {
+      if(alertTimer) clearTimeout(alertTimer)
+
+      setAlertShowen(true)
+
+      const timerID = setTimeout(() => {
+         setAlertShowen(false)
+      }, 1500)
+
+      setAlertTimer(timerID)
+   }
+
+   const props = {
+      backgroundColor: "var(--navBackgroundColor)",
+      border: 'none',
+      boxShadow: "var(--navShadow)"
+   }
+
    return(
       <>
          <Darkmode theme={theme} setTheme={setTheme}/>
          <Navbar theme={theme} cart={cart} />
+         <div className={`${styles.alertContainer} ${alertShowen && styles.showen}`}>
+            <SuccessAlert text={"Item Added to the Cart"} props={props} />
+         </div>
          <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
          <main className={styles.container}>
             <div className={styles.card}>
@@ -33,7 +62,7 @@ export default function Details({theme, setTheme, sidebar, setSidebar, productDe
                      <p><strong>Category:</strong> {productDetails.category}</p>
                   </div>
 
-                  <button className={styles.addBtn} onClick={(e) => addToCart(productDetails.id, e)}>
+                  <button className={styles.addBtn} onClick={(e) => {addToCart(productDetails.id, e); showAlert()}}>
                      Add to Cart
                   </button>
                </div>

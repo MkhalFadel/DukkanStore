@@ -6,6 +6,7 @@
    position: fixed;
    top: 113px;
    left: -200%;
+   background-color: rgba(0, 0, 0, 0.411);
 }
 
 .sideBar{
@@ -50,6 +51,14 @@
 }
 
 .sideBar span:hover{
+   border-left: 5px solid var(--primaryText);
+   background-color: rgba(0, 0, 0, 0.418);
+   width: 70%;
+   border-top-right-radius: 7px;
+   border-bottom-right-radius: 7px;
+}
+
+.sideBar span.checked{
    border-left: 5px solid var(--primaryText);
    background-color: rgba(0, 0, 0, 0.418);
    width: 70%;

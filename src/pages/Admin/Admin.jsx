@@ -2,6 +2,7 @@ import styles from './admin.module.css'
 import {useEffect, useState} from 'react';
 import { addProducts, fetchProducts, updateProduct, deleteProduct } from '../../API/products';
 import { SuccessAlert, WarningAlert, PrimaryAlert, DotPulseLoader } from '@mkhalfadel/modoui-core';
+import ScrollTop from '../../components/scrollTop/ScrollTop'
 
 export default function Admin({products, setProducts})
 {
@@ -142,6 +143,7 @@ export default function Admin({products, setProducts})
 
    return(
       <div className={styles.container}>
+         <ScrollTop />
          <div className={styles.alert}>
             {alert.adding && <SuccessAlert text={"Item Added"} />}
             {alert.deleting && <WarningAlert text={"An Item was Deleted"} />}
