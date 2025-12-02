@@ -7,6 +7,7 @@ import notFound from '../../assets/notFound.svg';
 import { useEffect, useState } from 'react'
 import whatsappIcon from '../../assets/whatsapp icon.svg'
 import ScrollTop from '../../components/scrollTop/ScrollTop.jsx'
+import { saveStorage } from '../../localStorage.js'
 
 export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCart})
 {
@@ -32,14 +33,18 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
 
    function editQuantity(id)
    {
-      setCart(cart => cart.map(i => i.id === id ? {...i, quantity: newQuantity} : i))
+      let tempCart = cart.map(i => i.id === id ? {...i, quantity: newQuantity} : i);
+      setCart(tempCart)
       setEdit(null)
       setNewQuantity(0);
+      saveStorage(tempCart);
    }
 
    function deleteItem(id)
    {
-      setCart(cart.filter(i => i.id !== id));
+      let tempCart = cart.filter(i => i.id !== id);
+      setCart(tempCart);
+      saveStorage(tempCart);
    }
 
    const cartEl = cart.map(i => (

@@ -60,7 +60,6 @@ export default function Homepage({
       else if(filter !== 'all')
          filteredProducts = search ? products.filter(p => p.title.toLowerCase().includes(search.toLowerCase()) && p.category === filter) : products.filter(p => p.category === filter);
       
-      console.log(filteredProducts)
       return filteredProducts?.map(p => (
          <div className={styles.itemCard} key={p.id} onClick={() => getProductDetails(p.id)}>
             <img src={p.img ? p.img : notFound} className={styles.itemPic} style={{borderBottom: theme === 'light' ? "0.5px solid black" : ""}} />

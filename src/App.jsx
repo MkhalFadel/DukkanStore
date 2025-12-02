@@ -4,6 +4,7 @@ import Cart from "./pages/Cart/Cart.jsx";
 import Details from "./pages/Details/Details.jsx";
 import Admin from "./pages/Admin/Admin.jsx";
 import { useEffect, useState } from "react";
+import { getStorage, saveStorage } from "./localStorage.js";
 
 export default function App()
 {
@@ -11,7 +12,10 @@ export default function App()
   const [sidebar, setSidebar] = useState(false);
   const [products, setProducts] = useState();
   const [productDetails, setProductDetails] = useState();
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    const data = getStorage();
+    return data ? data : [];
+  });
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -21,16 +25,22 @@ export default function App()
   function addToCart(id, e)
   {
     e.stopPropagation();
-    const exist = cart.find(p => p.id === id);
+    let tempCart = [...cart];
+    const exist = tempCart.find(p => p.id === id);
     if(!exist)
     {
         const product = products.filter(p => p.id === id);
-        product[0].quantity = 1;
-        setCart(prev => [...prev, product[0]]);
+        const newProduct = {...product[0], quantity: 1}
+        console.log(product)
+        tempCart.push(newProduct);
     }else{
-        setCart(cart => cart.map(p => p.id === id ? {...p, quantity: p.quantity + 1} : p))
+        tempCart = tempCart.map(p => p.id === id ? {...p, quantity: p.quantity + 1} : p);
     }
+  
+    setCart(tempCart)
+    saveStorage(tempCart);
   }
+
 
   return(
     <Routes>
