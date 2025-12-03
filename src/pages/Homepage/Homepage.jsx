@@ -62,7 +62,7 @@ export default function Homepage({
       
       return filteredProducts?.map(p => (
          <div className={styles.itemCard} key={p.id} onClick={() => getProductDetails(p.id)}>
-            <img src={p.img ? p.img : notFound} className={styles.itemPic} style={{borderBottom: theme === 'light' ? "0.5px solid black" : ""}} />
+            <img src={p.image ? p.image : notFound} className={styles.itemPic} style={{borderBottom: theme === 'light' ? "0.5px solid black" : ""}} />
             <p className={styles.itemName}>{p.title}</p>
             <p className={styles.itemPrice}>${p.price}</p>
             <button className={styles.addBtn} onClick={e => {addToCart(p.id, e); showAlert()}}>Add to Cart</button>

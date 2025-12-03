@@ -1,8 +1,9 @@
 import styles from './admin.module.css'
 import {useEffect, useState} from 'react';
 import { addProducts, fetchProducts, updateProduct, deleteProduct } from '../../API/products';
-import { SuccessAlert, WarningAlert, PrimaryAlert, DotPulseLoader } from '@mkhalfadel/modoui-core';
+import { SuccessAlert, WarningAlert, PrimaryAlert, DotPulseLoader, ErrorAlert } from '@mkhalfadel/modoui-core';
 import ScrollTop from '../../components/scrollTop/ScrollTop'
+import { validateInput } from '../../inputValidation';
 
 export default function Admin({products, setProducts})
 {
@@ -13,6 +14,9 @@ export default function Admin({products, setProducts})
    const [searchState, setSearchState] = useState('name'); // Decide if the search will be by the name or id
    const [loading, setLoading] = useState(true); // Hide loader after fetching Products
    const [alert, setAlert] = useState({adding: false, deleting: false, updating: false}) // Hide/Display Alert messages
+   const [errors, setErrors] = useState({});
+   const [showAlert, setShowAlert] = useState(false);
+   const [alertTimer, setAlertTimer] = useState(0);
 
    useEffect(() => {
       async function loadProducts()
@@ -60,9 +64,13 @@ export default function Admin({products, setProducts})
             <td>{p.title}</td>
             <td>{p.price}</td>
             <td>{p.category}</td>
-            <td><button onClick={() => {handleFreezing(p.id, p.isFrozen)}} className={styles.freezeBtn}>{p.isFrozen ? "Unfreeze" : "Freeze"}</button></td>
-            <td><button onClick={() => handleProductUpdate(p.id)} className={styles.editBtn}>Edit</button></td>
-            <td><button onClick={() => handleDeleting(p.id)} className={styles.deleteBtn}>Delete</button></td>
+            <td>
+               <button className={styles.freezeBtn} onClick={() => handleFreezing(p.id, p.isFrozen)}>
+                  {p.isFrozen ? "Unfreeze" : "Freeze"}
+               </button>
+            </td>
+            <td><button className={styles.editBtn} onClick={() => handleProductUpdate(p.id)}>Edit</button></td>
+            <td><button className={styles.deleteBtn} onClick={() => handleDeleting(p.id)}>Delete</button></td>
          </tr>
       ))
    }
@@ -125,6 +133,19 @@ export default function Admin({products, setProducts})
       }
    }
 
+   function handleForm()
+   {
+      const validationErrors = validateInput(product.title, Number(product.price), product.image);
+      if(Object.keys(validationErrors).length > 0)
+      {
+         setErrors(validationErrors);
+         setShowAlert(true)
+         displayAlerts()
+      }   
+      else
+         handleProduct()
+   }
+
    // Handles Deleting a product
    async function handleDeleting(id)
    {
@@ -141,53 +162,129 @@ export default function Admin({products, setProducts})
       frezzing && handleAlerts("updating");
    }
 
+   function displayAlerts()
+   {
+      if(alertTimer)
+         clearTimeout(alertTimer);
+
+      const timer = setTimeout(() => {
+         setShowAlert(false);
+      }, 1500)
+
+      setAlertTimer(timer)
+   }
+
    return(
-      <div className={styles.container}>
+      <div className={styles.dashboard}>
          <ScrollTop />
+
          <div className={styles.alert}>
-            {alert.adding && <SuccessAlert text={"Item Added"} />}
-            {alert.deleting && <WarningAlert text={"An Item was Deleted"} />}
-            {alert.updating && <PrimaryAlert text={"Item Updated"} />}
-         </div>
-         <div className={styles.row1}>
-            <input placeholder="Product Name" value={product.title} type="text" className={styles.title} onChange={(e) => setProduct(p => ({...p, title: e.target.value}))} />
+            {alert.adding && <SuccessAlert text="Item Added" />}
+            {alert.deleting && <WarningAlert text="An Item was Deleted" />}
+            {alert.updating && <PrimaryAlert text="Item Updated" />}
          </div>
 
-         <div className={styles.row2}>
-            <input placeholder="Product Price" value={product.price} className={styles.price} type="number" onChange={(e) => setProduct(p => ({...p, price: e.target.value}))} />
-            <input className={styles.uploadBtn} style={{marginLeft: "15px"}} placeholder="Choose Image" type="file" accept="image/*" onChange={(e) => handleImageUpload(e)} />
-            <select className={styles.category} value={product.category} onChange={(e) => setProduct(p => ({...p, category: e.target.value}))}>
-               <option value="Plastics">Plastics</option>
-               <option value="Electronics">Electronics</option>
-               <option value="Toys">Toys</option>
-               <option value="Clothes">Clothes</option>
-               <option value="Decoration">Decoration</option>
-            </select>
+         <div className={`${styles.errorAlerts} ${showAlert ? styles.active : ""}`}>
+            {errors.name && <ErrorAlert text={errors.name} />}
+            {errors.price && <ErrorAlert text={errors.price} />}
+            {errors.image && <ErrorAlert text={errors.image} />}
          </div>
 
-         <div className={styles.row3}>
-            <button className={styles.addBtn} onClick={() => handleProduct()}>{productState === 'adding' ? 'Add Products' : 'Update Product'}</button>
+         <div className={styles.card}>
+            <div className={styles.row}>
+               <input
+                  placeholder="Product Name"
+                  value={product.title}
+                  type="text"
+                  className={styles.input}
+                  onChange={(e) => setProduct(p => ({...p, title: e.target.value}))}
+               />
+            </div>
+
+            <div className={styles.row}>
+                  <input
+                     placeholder="Product Price"
+                     value={product.price}
+                     type="number"
+                     className={styles.input}
+                     onChange={(e) => setProduct(p => ({...p, price: e.target.value}))}
+                  />
+               
+                  <input
+                     type="file"
+                     accept="image/*"
+                     className={styles.file}
+                     onChange={handleImageUpload}
+                  />
+
+               <select
+                  className={styles.select}
+                  value={product.category}
+                  onChange={(e) => setProduct(p => ({...p, category: e.target.value}))}
+               >
+                  <option value="Plastics">Plastics</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Toys">Toys</option>
+                  <option value="Clothes">Clothes</option>
+                  <option value="Decoration">Decoration</option>
+               </select>
+            </div>
+
+            <button className={styles.actionBtn} onClick={handleForm}>
+               {productState === "adding" ? "Add Product" : "Update Product"}
+            </button>
          </div>
 
-         
-         <div className={styles.row4}>
-            <button onClick={() => setDisplayFrozen(false)} className={`${!displayFrozen ? styles.picked : ""}`}>All Products</button>
-            <button onClick={() => setDisplayFrozen(true)} style={{marginLeft: "20px"}} className={`${displayFrozen ? styles.picked : ""}`}>Frozen Products</button>
+         {/* Filters */}
+         <div className={styles.card}>
+            <div className={styles.rowCenter}>
+               <button
+                  className={`${styles.toggleBtn} ${!displayFrozen ? styles.active : ""}`}
+                  onClick={() => setDisplayFrozen(false)}
+               >
+                  All Products
+               </button>
+
+               <button
+                  className={`${styles.toggleBtn} ${displayFrozen ? styles.active : ""}`}
+                  onClick={() => setDisplayFrozen(true)}
+               >
+                  Frozen Products
+               </button>
+            </div>
+
+            <div className={styles.rowCenter}>
+               <input
+                  placeholder={`Search product by ${searchState === "name" ? "Name" : "ID"}`}
+                  value={search}
+                  type="text"
+                  className={styles.input}
+                  onChange={(e) => setSearch(e.target.value)}
+               />
+            </div>
+
+            <div className={styles.rowCenter}>
+               <button
+                  className={`${styles.toggleBtn} ${searchState === "id" ? styles.active : ""}`}
+                  onClick={() => setSearchState("id")}
+               >
+                  Search by ID
+               </button>
+
+               <button
+                  className={`${styles.toggleBtn} ${searchState === "name" ? styles.active : ""}`}
+                  onClick={() => setSearchState("name")}
+               >
+                  Search by Name
+               </button>
+            </div>
          </div>
 
-         <div className={styles.row6}>
-            <input placeholder={`Search Product by ${searchState === 'name' ? "Name" : 'ID'}`} value={search} onChange={(e) => {const search = e.target.value; setSearch(search)}} type="text" className={styles.search} />
-         </div>
-
-         <div className={styles.row6}>
-            <button onClick={() => setSearchState('id')} className={`${searchState === 'id' ? styles.picked : ""}`}>Search via ID</button>
-            <button onClick={() => setSearchState('name')} style={{marginLeft: "20px"}} className={`${searchState === 'name' ? styles.picked : ""}`}>Search via Name</button>
-         </div>
-
-         <div className={styles.displayProducts}>
+         {/* Products Table */}
+         <div className={styles.card}>
             <table className={styles.table}>
                <thead>
-                  <tr className={styles.column}>
+                  <tr>
                      <th>ID</th>
                      <th>Name</th>
                      <th>Price</th>
@@ -198,19 +295,17 @@ export default function Admin({products, setProducts})
                   </tr>
                </thead>
 
-               <tbody className={styles.tableBody}>
+               <tbody>
                   {products && displayProducts()}
                </tbody>
-
-
             </table>
-            
-            {loading && <div className={styles.loader}>
-               <DotPulseLoader />
-            </div>}
-         
-         </div>
 
-   </div>
+            {loading && (
+               <div className={styles.loader}>
+                  <DotPulseLoader />
+               </div>
+            )}
+         </div>
+      </div>
    )
 }
