@@ -1,0 +1,69 @@
+.container {
+   margin-top: 200px;
+   margin-bottom: 150px;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.card {
+   width: 400px;
+   padding: 25px 30px;
+   border: 1px solid var(--borders);
+   border-radius: 7px;
+   background-color: var(--cardBackground);
+   box-shadow: var(--shadow);
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+}
+
+.title {
+   text-align: center;
+   font-size: 1.6rem;
+}
+
+.form {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+}
+
+.input {
+   padding: 12px;
+   font-size: 1rem;
+   border-radius: 7px;
+   border: 1px solid var(--borders);
+   background-color: var(--inputBackground);
+   color: var(--textColor);
+}
+
+.input:focus {
+   outline: none;
+   border-color: var(--buttonBackgroundColor);
+}
+
+.loginBtn {
+   border: none;
+   padding: 12px;
+   border-radius: 40px;
+   background-color: var(--buttonBackgroundColor);
+   color: var(--buttonTextColor);
+   cursor: pointer;
+   font-size: 1rem;
+}
+
+.loginBtn:hover {
+   background-color: var(--buttonHoverBackgroundColor);
+}
+
+.error {
+   background-color: #ff4d4d33;
+   border-left: 4px solid #ff4d4d;
+   padding: 10px;
+   border-radius: 5px;
+   color: #ff4d4d;
+   font-size: 0.9rem;
+   text-align: left;
+}

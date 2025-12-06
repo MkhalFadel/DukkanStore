@@ -4,8 +4,9 @@ import { addProducts, fetchProducts, updateProduct, deleteProduct } from '../../
 import { SuccessAlert, WarningAlert, PrimaryAlert, DotPulseLoader, ErrorAlert } from '@mkhalfadel/modoui-core';
 import ScrollTop from '../../components/scrollTop/ScrollTop'
 import { validateInput } from '../../inputValidation';
+import { useNavigate } from 'react-router';
 
-export default function Admin({products, setProducts})
+export default function Admin({products, setProducts, isAdmin})
 {
    const [product, setProduct] = useState({id: "", title: "", price: 0, category: "Plastics", image: ""})
    const [productState, setProductState] = useState('adding');
@@ -18,7 +19,11 @@ export default function Admin({products, setProducts})
    const [showAlert, setShowAlert] = useState(false);
    const [alertTimer, setAlertTimer] = useState(0);
 
+   const navigate = useNavigate();
+
    useEffect(() => {
+      !isAdmin && navigate("/login")
+      
       async function loadProducts()
       {
          const data = await fetchProducts();
@@ -26,8 +31,7 @@ export default function Admin({products, setProducts})
          setProducts(productsData);
          setLoading(false)
       }
-      
-      loadProducts()
+      loadProducts();
    }, [])
 
    // Take the image object and convert it into base64 to store

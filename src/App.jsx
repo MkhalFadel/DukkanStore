@@ -3,6 +3,7 @@ import Homepage from "./pages/Homepage/Homepage.jsx";
 import Cart from "./pages/Cart/Cart.jsx";
 import Details from "./pages/Details/Details.jsx";
 import Admin from "./pages/Admin/Admin.jsx";
+import Login from "./pages/Admin/adminLogin/Login.jsx";
 import { useEffect, useState } from "react";
 import { getStorage, saveStorage } from "./localStorage.js";
 
@@ -12,6 +13,7 @@ export default function App()
   const [sidebar, setSidebar] = useState(false);
   const [products, setProducts] = useState();
   const [productDetails, setProductDetails] = useState();
+  const [isAdmin, setIsAdmin] = useState(false)
   const [cart, setCart] = useState(() => {
     const data = getStorage();
     return data ? data : [];
@@ -47,7 +49,8 @@ export default function App()
       <Route path="/" element={<Homepage theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} products={products} setProducts={setProducts} productDetails={productDetails} setProductDetails={setProductDetails} cart={cart} setCart={setCart} addToCart={addToCart} />} />
       <Route path="/cart" element={<Cart theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} cart={cart} setCart={setCart} />} />
       <Route path="/details" element={<Details theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} productDetails={productDetails} setProductDetails={setProductDetails} cart={cart} addToCart={addToCart} />} />
-      <Route path="admin" element={<Admin products={products} setProducts={setProducts} />} />
+      <Route path="/admin" element={<Admin products={products} setProducts={setProducts} isAdmin={isAdmin} />} />
+      <Route path="/login" element={<Login setIsAdmin={setIsAdmin} />} />
     </Routes>
   )
 }
