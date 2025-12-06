@@ -1,12 +1,12 @@
 const API_URL = 'https://6923368a09df4a492324b26f.mockapi.io/dukkan/';
 
-export async function addProducts(title, price, category, image)
+export async function addProducts(pId, title, price, category, image)
 {
    try{
          const res = await fetch(`${API_URL}/Products`,{
             method: 'POST',
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({title, price, category, image})
+            body: JSON.stringify({pId, title, price, category, image})
          }) 
          return res.ok;
    }
@@ -38,7 +38,7 @@ export async function deleteProduct(id)
    catch(err)
    {
       console.log(err);
-   }0
+   }
 }
 
 export async function updateProduct({id, title, price, category, image, isFrozen})

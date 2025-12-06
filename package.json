@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@mkhalfadel/modoui-core": "^1.0.3",
+    "nanoid": "^5.1.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router": "^7.9.6"
