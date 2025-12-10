@@ -1,6 +1,7 @@
 import styles from './login.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { DEMO_KEY } from '../../../demoPassword';
 
 export default function Login({setIsAdmin}) {
    const [password, setPassword] = useState("");
@@ -11,7 +12,7 @@ export default function Login({setIsAdmin}) {
    function handleLogin(e) {
       e.preventDefault();
 
-      if (password === import.meta.env.VITE_ADMIN_KEY) {
+      if (password === import.meta.env.VITE_ADMIN_KEY || password === DEMO_KEY) {
          localStorage.setItem("adminAuth", true);
          navigate("/admin");
          setIsAdmin(true)
