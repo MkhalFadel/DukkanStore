@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react'
 import whatsappIcon from '../../assets/whatsapp icon.svg'
 import ScrollTop from '../../components/scrollTop/ScrollTop.jsx'
 import { saveStorage } from '../../localStorage.js'
+import Popup from '../../components/PopUp/Popup.jsx'
+import { clearStorage } from '../../localStorage.js'
 
 export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCart})
 {
@@ -15,6 +17,7 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
    const [edit, setEdit] = useState(null);
    const [newQuantity, setNewQuantity] = useState(0);
    const [pricing, setPricing] = useState();
+   const [showConfirm, setShowConfirm] = useState(false);
 
    useEffect(() => {
       let totalPrice = 0;
@@ -49,7 +52,7 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
 
    const cartEl = cart.map(i => (
       <div key={i.id} className={styles.item}>
-         <img src={i.img ?? notFound} className={styles.itemPic} />
+         <img src={i.image ?? notFound} className={styles.itemPic} />
          <div className={styles.itemInfo}>
          <h3 className={styles.itemName}>{i.title}</h3>
          <p className={styles.itemPrice}>${(Number(i.price) * i.quantity).toFixed(2)}</p>
@@ -89,10 +92,13 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
 
       const url =  "https://wa.me/" + number + "?text=" + encodeURIComponent(message) + encodeURIComponent(totalMsg);
       window.open(url, "_blank")
+      clearStorage();
+      setCart([]);
    }
 
    return(
       <>
+         {showConfirm && <Popup setShowConfirm={setShowConfirm} checkout={checkout} />}
          <Darkmode theme={theme} setTheme={setTheme}/>
          <Navbar theme={theme} cart={cart} />
          <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
@@ -123,7 +129,7 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
                         <p>${pricing?.finalPrice.toFixed(2)}</p>
                      </div>
 
-                     <button onClick={checkout} className={styles.whatsappBtn}>
+                     <button onClick={() => setShowConfirm(true)} className={styles.whatsappBtn}>
                         <img src={whatsappIcon} className={styles.whatsappIcon} />
                         Checkout with WhatsApp
                      </button>

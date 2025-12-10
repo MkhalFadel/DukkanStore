@@ -83,10 +83,11 @@ export default function Admin({products, setProducts, isAdmin})
    // Take the products to update and adds its values to the inputs
    function handleProductUpdate(id)
    {
+      scroll({top: 0, behavior: 'smooth'})
       setProductState('editing')
       const productToUpdate = products.filter(p => p.pId === id);
       console.log(productToUpdate[0])
-      setProduct(p => ({
+      setProduct(() => ({
                         id: productToUpdate[0].id,
                         pId: productToUpdate[0].pId,
                         title: productToUpdate[0].title,
@@ -124,19 +125,18 @@ export default function Admin({products, setProducts, isAdmin})
    async function handleProduct()
    {
       const itemId = products.filter(p => p.pId === product.pId);
-      console.log(itemId[0])
       if(productState === 'adding'){
          const ID = nanoid();
-         const adding = await addProducts(product.pId = ID, product.title, Number(product.price).toFixed(2), product.category, product.image)
+         const adding = await addProducts(ID, product.title, Number(product.price).toFixed(2), product.category, product.image)
          setProducts(p => ([...p, {...product, pId: ID}]))
-         adding && setProduct(() => ({pId: "", title: "", price: 0, image: '', category: ''}))
+         adding && setProduct(() => ({pId: "", title: "", price: 0, image: '', category: 'Plastics'}))
          adding && handleAlerts("adding")
       }
       else{
          const updating = updateProduct({id: product.id, title: product.title, price: Number(product.price).toFixed(2), category: product.category, image: product.image});
          setProducts(products.filter(p => p.pId !== itemId[0].pId));
          setProducts(prev => ([...prev, product]))
-         setProduct(() => ({title: "", price: 0, image: '', category: ''}))
+         setProduct(() => ({title: "", price: 0, image: '', category: 'Plastics'}))
          setProductState('adding')
          updating && handleAlerts("updating")
       }
@@ -236,6 +236,8 @@ export default function Admin({products, setProducts, isAdmin})
                   <option value="Toys">Toys</option>
                   <option value="Clothes">Clothes</option>
                   <option value="Decoration">Decoration</option>
+                  <option value="Cleaning">Cleaning products</option>
+                  <option value="Makeup">Makeup</option>
                </select>
             </div>
 

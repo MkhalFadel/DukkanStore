@@ -1,0 +1,75 @@
+.orderModalOverlay {
+   position: fixed;
+   inset: 0;
+   background: rgba(0,0,0,0.45);
+   backdrop-filter: blur(4px);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 3000;
+}
+
+.orderModal {
+   width: 90%;
+   max-width: 380px;
+   background: var(--card-bg, #fff);
+   color: var(--text-color, #111);
+   padding: 1.6rem 1.4rem;
+   border-radius: 14px;
+   box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+   animation: modalPop 0.25s ease;
+}
+
+@keyframes modalPop {
+   from { transform: scale(0.85); opacity: 0; }
+   to { transform: scale(1); opacity: 1; }
+}
+
+.orderModal h2 {
+   margin-bottom: 0.5rem;
+   font-size: 1.3rem;
+   font-weight: 600;
+}
+
+.orderModal p {
+   margin-bottom: 1.2rem;
+   line-height: 1.45;
+   font-size: 0.95rem;
+}
+
+.orderModalBtns {
+   display: flex;
+   gap: 10px;
+}
+
+.orderCancelBtn,
+.orderConfirmBtn {
+   flex: 1;
+   padding: 10px 0;
+   border-radius: 10px;
+   border: none;
+   font-size: 0.95rem;
+   cursor: pointer;
+   transition: 0.2s;
+}
+
+/* Cancel */
+.orderCancelBtn {
+   background: #ddd;
+   color: #444;
+}
+
+.orderCancelBtn:hover {
+   background: #c7c7c7;
+}
+
+/* Confirm */
+.orderConfirmBtn {
+   background: #0044FF;
+   color: white;
+   font-weight: 600;
+}
+
+.orderConfirmBtn:hover {
+   opacity: 0.9;
+}

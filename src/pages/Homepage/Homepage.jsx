@@ -11,6 +11,7 @@ import { DualRingLoader } from '@mkhalfadel/modoui-core'
 import { useNavigate } from 'react-router'
 import ScrollTop from '../../components/scrollTop/ScrollTop.jsx'
 import { SuccessAlert } from '@mkhalfadel/modoui-core'
+import Sorting from '../../components/Sorting/Sort.jsx'
 
 export default function Homepage({
                                  theme,
@@ -29,6 +30,7 @@ export default function Homepage({
    const [alertShowen, setAlertShowen] = useState(false);
    const [alertTimer, setAlertTimer] = useState(0);
    const [filter, setFilter] = useState("all");
+   const [sortBy, setSortBy] = useState("none");
 
    const navigate = useNavigate();
 
@@ -50,15 +52,31 @@ export default function Homepage({
       setProductDetails(product[0]);
       navigate('/details')
    }
+
+   function sortAndFilter()
+   {
+      let sorted = products && [...products];
+      
+      if(sortBy === 'priceLow') sorted.sort((a,b) => a.price - b.price);
+      else if (sortBy === "priceHigh") sorted.sort((a, b) => b.price - a.price);
+      else if (sortBy === "nameAz") sorted.sort((a, b) => a.title.localeCompare(b.title));
+      else if (sortBy === "nameZa") sorted.sort((a, b) => b.title.localeCompare(a.title));
+      
+      return sorted;
+   }
    
    function displayProducts()
    {
-      let filteredProducts;
+      const sorted = sortAndFilter();
 
-      if(filter === 'all')
-         filteredProducts = search ? products.filter(p => p.title.toLowerCase().includes(search.toLowerCase())) : products;
-      else if(filter !== 'all')
-         filteredProducts = search ? products.filter(p => p.title.toLowerCase().includes(search.toLowerCase()) && p.category === filter) : products.filter(p => p.category === filter);
+      let filteredProducts;
+      
+      if(filter === 'all' && sortBy === 'none')
+         filteredProducts = search ? sorted.filter(p => p.title.toLowerCase().includes(search.toLowerCase())) : sorted;
+      else if(filter !== 'all' && sortBy === 'none')
+         filteredProducts = search ? sorted.filter(p => p.title.toLowerCase().includes(search.toLowerCase()) && p.category === filter) : sorted.filter(p => p.category === filter);
+      else
+         filteredProducts = search ? sorted.filter(p => p.title.toLowerCase().includes(search.toLowerCase()) && (filter === 'all' || p.category === filter)) : sorted.filter(p => filter === 'all' || p.category === filter);
       
       return filteredProducts?.map(p => (
          <div className={styles.itemCard} key={p.id} onClick={() => getProductDetails(p.id)}>
@@ -93,6 +111,7 @@ export default function Homepage({
 
    return(
       <>
+         <Sorting setSortBy={setSortBy} />
          <Darkmode theme={theme} setTheme={setTheme}/>
          <Navbar theme={theme} search={search} setSearch={setSearch} cart={cart} />
          <div className={`${styles.alertContainer} ${alertShowen && styles.showen}`}>

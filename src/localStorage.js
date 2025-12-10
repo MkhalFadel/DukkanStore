@@ -21,3 +21,8 @@ export function getStorage()
       return [];
    }
 }
+
+export function clearStorage()
+{
+   localStorage.removeItem("cart")
+}

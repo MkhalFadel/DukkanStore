@@ -96,6 +96,7 @@
    top: 170px;
    align-self: center;
    position: absolute;
+   background-color: transparent !important;
 }
 
 .alertContainer{

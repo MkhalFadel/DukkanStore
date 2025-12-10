@@ -25,8 +25,10 @@ export default function Sidebar({sidebar, setSidebar, filter, setFilter})
                <span onClick={() => filterProducts("Plastics")} className={filter === 'Plastics' ? styles.checked : ""}>Plastics</span>
                <span onClick={() => filterProducts("Electronics")} className={filter === 'Electronics' ? styles.checked : ""}>Electronics</span>
                <span onClick={() => filterProducts("Toys")} className={filter === 'Toys' ? styles.checked : ""}>Toys</span>
-               <span onClick={() => filterProducts("Decoration")} className={filter === 'Decoration' ? styles.checked : ""}>Decoration</span>
                <span onClick={() => filterProducts("Clothes")} className={filter === 'Clothes' ? styles.checked : ""}>Clothes</span>
+               <span onClick={() => filterProducts("Decoration")} className={filter === 'Decoration' ? styles.checked : ""}>Decoration</span>
+               <span onClick={() => filterProducts("Cleaning")} className={filter === 'Cleaning' ? styles.checked : ""}>Cleaning products</span>
+               <span onClick={() => filterProducts("Makeup")} className={filter === 'Makeup' ? styles.checked : ""}>Makeup</span>
             </div>
          </div>
       </>
