@@ -4,6 +4,7 @@ import Darkmode from '../../components/DarkMode/DarkMode.jsx'
 import Footer from '../../components/Footer/Footer.jsx'
 import Sidebar from '../../components/Sidebar/Sidebar.jsx'
 import notFound from '../../assets/notFound.svg';
+import emptyCart from '../../assets/emptyCart.svg';
 import { useEffect, useState } from 'react'
 import whatsappIcon from '../../assets/whatsapp icon.svg'
 import ScrollTop from '../../components/scrollTop/ScrollTop.jsx'
@@ -108,6 +109,7 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
 
                <div className={styles.left}>
                   {cartEl}
+                  {cart.length === 0 && <img src={emptyCart} alt="emptyCart" className={styles.emptyCartImg} /> }
                </div>
 
                <div className={styles.right}>

@@ -1,6 +1,6 @@
 import styles from './navbar.module.css';
 import { Link } from 'react-router';
-import cartIcon from '../../assets/cart2.svg';
+import cartIcon from '../../assets/cart.svg';
 import { GlowInput } from '@mkhalfadel/modoui-core';
 import { useEffect, useState } from 'react';
 

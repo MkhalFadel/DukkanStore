@@ -6,7 +6,7 @@ import Sidebar from '../../components/Sidebar/Sidebar.jsx'
 import { useEffect, useState } from 'react'
 import { fetchProducts } from '../../API/products.js'
 import notFound from '../../assets/notFound.svg';
-import noResults from '../../assets/itemNotFound.svg'
+import noResults from '../../assets/noResults.svg'
 import { DualRingLoader } from '@mkhalfadel/modoui-core'
 import { useNavigate } from 'react-router'
 import ScrollTop from '../../components/scrollTop/ScrollTop.jsx'

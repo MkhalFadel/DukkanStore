@@ -91,9 +91,9 @@
 }
 
 .noResultsImg{
-   width: 200px;
-   height: 200px;
-   top: 170px;
+   width: 350px;
+   height: 350px;
+   top: 100px;
    align-self: center;
    position: absolute;
    background-color: transparent !important;
