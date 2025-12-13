@@ -16,9 +16,9 @@ export default function Admin({products, setProducts, isAdmin})
    const [searchState, setSearchState] = useState('name'); // Decide if the search will be by the name or id
    const [loading, setLoading] = useState(true); // Hide loader after fetching Products
    const [alert, setAlert] = useState({adding: false, deleting: false, updating: false}) // Hide/Display Alert messages
-   const [errors, setErrors] = useState({});
-   const [showAlert, setShowAlert] = useState(false);
-   const [alertTimer, setAlertTimer] = useState(0);
+   const [errors, setErrors] = useState({}); // Store errors to display if any were found
+   const [showAlert, setShowAlert] = useState(false); // Shows alerts
+   const [alertTimer, setAlertTimer] = useState(0); // Stores timeout ID's to prevent UI issues
 
    const navigate = useNavigate();
 
@@ -142,6 +142,7 @@ export default function Admin({products, setProducts, isAdmin})
       }
    }
 
+   // Validates the input value for proudcts and checks if values are valid
    function handleForm()
    {
       const validationErrors = validateInput(product.title, Number(product.price), product.image);

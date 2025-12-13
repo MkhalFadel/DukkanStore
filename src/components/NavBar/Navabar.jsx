@@ -8,13 +8,12 @@ export default function Navbar({theme, search, setSearch, cart})
 {
    const [cartCounter, setCartCounter] = useState(0);
 
+   // Track the amount of items in the cart and display them
    useEffect(() => {
       let counter = 0;
       cart.forEach(i => counter = counter + +i.quantity)
       setCartCounter(counter)
    }, [cart])
-
-   console.log(cartCounter)
 
    const props = {
       width: "100%",

@@ -4,6 +4,7 @@ import humMenu from '../../assets/icons/humMenu.svg'
 
 export default function Sidebar({sidebar, setSidebar, filter, setFilter})
 {
+   // Filter the products depending on the chosen category
    function filterProducts(category)
    {
       setFilter(category);

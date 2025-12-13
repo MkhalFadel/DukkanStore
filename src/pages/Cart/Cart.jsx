@@ -15,10 +15,10 @@ import { clearStorage } from '../../localStorage.js'
 export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCart})
 {
 
-   const [edit, setEdit] = useState(null);
-   const [newQuantity, setNewQuantity] = useState(0);
-   const [pricing, setPricing] = useState();
-   const [showConfirm, setShowConfirm] = useState(false);
+   const [edit, setEdit] = useState(null); // Shows an input El to take edit the quantity of a product
+   const [newQuantity, setNewQuantity] = useState(0); // Takes the new quantity of the product
+   const [pricing, setPricing] = useState(); // Stores the prices data of the cart
+   const [showConfirm, setShowConfirm] = useState(false); // Display the confirmation popup when the user checksout
 
    useEffect(() => {
       let totalPrice = 0;
@@ -35,6 +35,7 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
 
    }, [cart])
 
+   // Edit products quantity
    function editQuantity(id)
    {
       let tempCart = cart.map(i => i.id === id ? {...i, quantity: newQuantity} : i);
@@ -44,6 +45,7 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
       saveStorage(tempCart);
    }
 
+   // Delete a product from the cart
    function deleteItem(id)
    {
       let tempCart = cart.filter(i => i.id !== id);
@@ -51,6 +53,7 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
       saveStorage(tempCart);
    }
 
+   // Create the cart's items Elements
    const cartEl = cart.map(i => (
       <div key={i.id} className={styles.item}>
          <img src={i.image ?? notFound} className={styles.itemPic} />
@@ -78,12 +81,14 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
       </div>
    ))
 
+   // Handles the Checout proccess
    function checkout()
    {
       let message = '';
       let total = 0;
       const number = '96597977452';
 
+      // Loops the cart's items and store them in a message variable
       cart.forEach(item => {
          message += `-${item.title} x${item.quantity} $${item.price}\n`
          total = (item.price * item.quantity) + total;
@@ -91,6 +96,7 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
 
       let totalMsg = `Total Price: $${total.toFixed(2)}`;
 
+      // Redirect to whatsapp with a ready to send message that conatins the cart's items and the total cost
       const url =  "https://wa.me/" + number + "?text=" + encodeURIComponent(message) + encodeURIComponent(totalMsg);
       window.open(url, "_blank")
       clearStorage();
@@ -139,7 +145,7 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
                </div>
 
             </div>
-</main>
+         </main>
 
          <Footer />
       </>

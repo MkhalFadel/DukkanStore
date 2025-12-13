@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { DEMO_KEY } from '../../../demoPassword';
 
 export default function Login({setIsAdmin}) {
-   const [password, setPassword] = useState("");
+   const [password, setPassword] = useState(""); // Store password input value
    const [error, setError] = useState("");
 
    const navigate = useNavigate();

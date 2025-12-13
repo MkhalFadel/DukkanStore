@@ -9,12 +9,12 @@ import { useState } from 'react'
 
 
 
-export default function Details({theme, setTheme, sidebar, setSidebar, productDetails, setProductDetails, cart, addToCart})
+export default function Details({theme, setTheme, sidebar, setSidebar, productDetails, cart, addToCart})
 {
 
-   const [alertShowen, setAlertShowen] = useState(false);
-   const [alertTimer, setAlertTimer] = useState(0)
-
+   const [alertShowen, setAlertShowen] = useState(false); // Dispaly the Add alert
+   const [alertTimer, setAlertTimer] = useState(0); // Takes the timout's ID to prevent UI issues
+   
    function showAlert()
    {
       if(alertTimer) clearTimeout(alertTimer)
@@ -58,7 +58,7 @@ export default function Details({theme, setTheme, sidebar, setSidebar, productDe
                   <p className={styles.price}>${productDetails.price}</p>
 
                   <div className={styles.meta}>
-                     <p><strong>ID:</strong> {productDetails.id}</p>
+                     <p><strong>ID:</strong> {productDetails.pId}</p>
                      <p><strong>Category:</strong> {productDetails.category}</p>
                   </div>
 

@@ -1,3 +1,4 @@
+// Save cart in localStorage
 export function saveStorage(cart)
 {
    try {
@@ -8,6 +9,7 @@ export function saveStorage(cart)
    }
 }
 
+// Fetch the cart from localStorage
 export function getStorage()
 {
    try {
@@ -22,6 +24,7 @@ export function getStorage()
    }
 }
 
+// Clear localStorage on checkout
 export function clearStorage()
 {
    localStorage.removeItem("cart")

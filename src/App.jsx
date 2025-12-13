@@ -9,21 +9,22 @@ import { getStorage, saveStorage } from "./localStorage.js";
 
 export default function App()
 {
-  const [theme, setTheme] = useState("dark");
-  const [sidebar, setSidebar] = useState(false);
-  const [products, setProducts] = useState();
-  const [productDetails, setProductDetails] = useState();
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [theme, setTheme] = useState("dark"); // For dark / light theme options
+  const [sidebar, setSidebar] = useState(false); // Show / Hide sidebar
+  const [products, setProducts] = useState(); // Stores the products
+  const [productDetails, setProductDetails] = useState(); // Stores the clicked on product to dispaly its details
+  const [isAdmin, setIsAdmin] = useState(false); // Checks if the user is admin or not
   const [cart, setCart] = useState(() => {
     const data = getStorage();
     return data ? data : [];
-  });
+  }); // Checks if user have cart items stores in local storage
 
   useEffect(() => {
     const body = document.querySelector("body");
     theme === 'dark' ? body.classList.add("darkMode") : body.classList.remove("darkMode");
   },[theme])
 
+  // Handles adding items to cart
   function addToCart(id, e)
   {
     e.stopPropagation();
@@ -46,9 +47,9 @@ export default function App()
 
   return(
     <Routes>
-      <Route path="/" element={<Homepage theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} products={products} setProducts={setProducts} productDetails={productDetails} setProductDetails={setProductDetails} cart={cart} setCart={setCart} addToCart={addToCart} />} />
+      <Route path="/" element={<Homepage theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} products={products} setProducts={setProducts} setProductDetails={setProductDetails} cart={cart} setCart={setCart} addToCart={addToCart} />} />
       <Route path="/cart" element={<Cart theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} cart={cart} setCart={setCart} />} />
-      <Route path="/details" element={<Details theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} productDetails={productDetails} setProductDetails={setProductDetails} cart={cart} addToCart={addToCart} />} />
+      <Route path="/details" element={<Details theme={theme} setTheme={setTheme} sidebar={sidebar} setSidebar={setSidebar} productDetails={productDetails} cart={cart} addToCart={addToCart} />} />
       <Route path="/admin" element={<Admin products={products} setProducts={setProducts} isAdmin={isAdmin} />} />
       <Route path="/login" element={<Login setIsAdmin={setIsAdmin} />} />
     </Routes>

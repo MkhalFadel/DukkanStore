@@ -2,10 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import styles from "./sort.module.css";
 
 export default function Sorting({ setSortBy }) {
-   const [open, setOpen] = useState(false);
-   const [active, setActive] = useState("Default");
+   const [open, setOpen] = useState(false); // Opens / Closes the options for the filter
+   const [active, setActive] = useState("Default"); // Takes the filter choice of the user
    const dropdownRef = useRef(null);
 
+   // Filtering options
    const options = [
       { label: "Default", value: "none" },
       { label: "Price: Low → High", value: "priceLow" },
@@ -20,7 +21,7 @@ export default function Sorting({ setSortBy }) {
       setOpen(false);
    }
 
-  // Close dropdown when clicking outside
+   // Close dropdown when clicking outside
    useEffect(() => {
       function handleClickOutside(e) {
          if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {

@@ -20,17 +20,16 @@ export default function Homepage({
                                  setSidebar,
                                  products,
                                  setProducts,
-                                 productDetails,
                                  setProductDetails,
                                  cart,
                                  addToCart})
 {
-   const [loading, setLoading] = useState(products ? false : true);
-   const [search, setSearch] = useState("");
-   const [alertShowen, setAlertShowen] = useState(false);
-   const [alertTimer, setAlertTimer] = useState(0);
-   const [filter, setFilter] = useState("all");
-   const [sortBy, setSortBy] = useState("none");
+   const [loading, setLoading] = useState(products ? false : true); // Show / Hide the Loading animation
+   const [search, setSearch] = useState(""); // Stores the value of the search input
+   const [alertShowen, setAlertShowen] = useState(false); // Display the Add Alert
+   const [alertTimer, setAlertTimer] = useState(0); // Stores the timeout's ID to prevent UI issues
+   const [filter, setFilter] = useState("all"); // Takes the filter value to filter products
+   const [sortBy, setSortBy] = useState("none"); // Takes the sorting value to sort products
 
    const navigate = useNavigate();
 
@@ -46,6 +45,7 @@ export default function Homepage({
       loadProducts();
    }, [])
 
+   // Redirect to the details page and shows products details
    function getProductDetails(id)
    {
       const product = products?.filter(p => p.id === id);
@@ -53,6 +53,7 @@ export default function Homepage({
       navigate('/details')
    }
 
+   // Handels the sorting and filtering of the products
    function sortAndFilter()
    {
       let sorted = products && [...products];
@@ -65,12 +66,14 @@ export default function Homepage({
       return sorted;
    }
    
+   // Display products
    function displayProducts()
    {
-      const sorted = sortAndFilter();
+      const sorted = sortAndFilter(); // Store the products after sorting
 
       let filteredProducts;
       
+      // Filter products if Search or Filter values exist else display as is
       if(filter === 'all' && sortBy === 'none')
          filteredProducts = search ? sorted.filter(p => p.title.toLowerCase().includes(search.toLowerCase())) : sorted;
       else if(filter !== 'all' && sortBy === 'none')

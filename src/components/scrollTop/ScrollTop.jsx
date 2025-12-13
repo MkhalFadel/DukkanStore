@@ -9,6 +9,7 @@ export default function ScrollTop()
    useEffect(() => {
       function handleScroll()
       {
+         // Check the view position of the user 
          if(window.scrollY > 512) setVisible(true)
          else setVisible(false);
       }
