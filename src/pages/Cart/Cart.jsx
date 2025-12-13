@@ -38,11 +38,18 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
    // Edit products quantity
    function editQuantity(id)
    {
-      let tempCart = cart.map(i => i.id === id ? {...i, quantity: newQuantity} : i);
+      let tempCart;
+      if(!newQuantity)
+      {
+         tempCart = cart.filter(i => i.id !== id);
+      }
+      else{
+         tempCart = cart.map(i => i.id === id ? {...i, quantity: newQuantity} : i);
+      }
       setCart(tempCart)
       setEdit(null)
       setNewQuantity(0);
-      saveStorage(tempCart);
+      saveStorage(tempCart, 'cart');
    }
 
    // Delete a product from the cart
@@ -50,11 +57,11 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
    {
       let tempCart = cart.filter(i => i.id !== id);
       setCart(tempCart);
-      saveStorage(tempCart);
+      saveStorage(tempCart, 'cart');
    }
 
    // Create the cart's items Elements
-   const cartEl = cart.map(i => (
+   const cartEl = cart && cart.map(i => (
       <div key={i.id} className={styles.item}>
          <img src={i.image ?? notFound} className={styles.itemPic} />
          <div className={styles.itemInfo}>

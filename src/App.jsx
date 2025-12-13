@@ -9,13 +9,16 @@ import { getStorage, saveStorage } from "./localStorage.js";
 
 export default function App()
 {
-  const [theme, setTheme] = useState("dark"); // For dark / light theme options
+  const [theme, setTheme] = useState(() => {
+    const mode = getStorage('mode');
+    return mode;
+  }); // For dark / light theme options
   const [sidebar, setSidebar] = useState(false); // Show / Hide sidebar
   const [products, setProducts] = useState(); // Stores the products
   const [productDetails, setProductDetails] = useState(); // Stores the clicked on product to dispaly its details
   const [isAdmin, setIsAdmin] = useState(false); // Checks if the user is admin or not
   const [cart, setCart] = useState(() => {
-    const data = getStorage();
+    const data = getStorage('cart');
     return data ? data : [];
   }); // Checks if user have cart items stores in local storage
 
@@ -41,7 +44,7 @@ export default function App()
     }
   
     setCart(tempCart)
-    saveStorage(tempCart);
+    saveStorage(tempCart, 'cart');
   }
 
 

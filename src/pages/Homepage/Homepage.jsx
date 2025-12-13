@@ -33,12 +33,24 @@ export default function Homepage({
 
    const navigate = useNavigate();
 
+      // Fisher–Yates shuffle algorithem returns a new shuffled array
+      function shuffleProducts(array) {
+         const arr = [...array];
+         for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+         }
+
+         return arr;
+      }
+
    useEffect(() => {
       async function loadProducts()
       {
          const data = await fetchProducts();
          const productsData = data || [];
-         setProducts(productsData)
+         const shuffled = shuffleProducts(productsData); // Shuffle productsData using Fisher–Yates algorithem before setting state
+         setProducts(shuffled)
          setLoading(false);
       }
 
@@ -53,7 +65,6 @@ export default function Homepage({
       navigate('/details')
    }
 
-   // Handels the sorting and filtering of the products
    function sortAndFilter()
    {
       let sorted = products && [...products];
@@ -66,10 +77,9 @@ export default function Homepage({
       return sorted;
    }
    
-   // Display products
    function displayProducts()
    {
-      const sorted = sortAndFilter(); // Store the products after sorting
+      const sorted = sortAndFilter();
 
       let filteredProducts;
       
