@@ -29,7 +29,6 @@ export default function Navbar({theme, search, setSearch, cart})
                <Link className={styles.homeLink} to="/">
                   Du<span>kk</span>an
                </Link>
-               <Link to="/admin" className={styles.adminLink}>+</Link>
          </div>
 
          <div className={styles.middle}>

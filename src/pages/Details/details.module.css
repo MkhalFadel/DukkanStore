@@ -1,35 +1,37 @@
 .container {
    flex: 1;
-   margin-top: 130px;
+   margin-top: 200px;
    margin-bottom: 50px;
    display: flex;
    justify-content: center;
    align-items: center;
-   padding: 40px 20px;
+   padding: 30px 16px;
 }
 
 .card {
    display: flex;
-   gap: 40px;
-   padding: 30px;
-   width: 80%;
-   max-width: 900px;
+   flex-direction: column;
+   gap: 25px;
+   padding: 24px;
+   width: 100%;
+   max-width: 420px;
    border-radius: 16px;
    background-color: var(--navBackgroundColor);
    box-shadow: var(--navShadow);
    border: 1px solid var(--borders);
+   text-align: center;
 }
 
 .imageWrapper {
    display: flex;
    justify-content: center;
    align-items: center;
-   width: 40%;
+   width: 100%;
 }
 
 .productPic {
    width: 100%;
-   max-width: 300px;
+   max-width: 240px;
    height: auto;
    object-fit: contain;
    border-radius: 12px;
@@ -39,24 +41,24 @@
    display: flex;
    flex-direction: column;
    justify-content: center;
-   width: 60%;
+   width: 100%;
 }
 
 .name {
-   font-size: 2rem;
-   margin-bottom: 5px;
+   font-size: 1.6rem;
+   margin-bottom: 6px;
    color: var(--primaryText);
 }
 
 .price {
-   font-size: 1.4rem;
-   margin-bottom: 20px;
+   font-size: 1.3rem;
+   margin-bottom: 18px;
    font-weight: bold;
 }
 
 .meta {
    color: var(--secondaryText);
-   margin-bottom: 25px;
+   margin-bottom: 20px;
    line-height: 1.6rem;
 }
 
@@ -76,32 +78,74 @@
    background-color: var(--buttonHoverBackgroundColor);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-   .card {
-      flex-direction: column;
-      text-align: center;
-   }
-
-   .imageWrapper,
-   .info {
-      width: 100%;
-   }
-
-   .productPic {
-      max-width: 250px;
-      margin-bottom: 20px;
-   }
-}
-
 .alertContainer{
    position: fixed;
-   bottom: -100px;
-   right: 20px;
-   z-index: 100;
+   top: 0px;
+   right: 0;
+   width: 100%;
+   height: fit-content;
+   justify-items: center;
    transition: all ease-in-out 0.25s;
+   z-index: 100;
 }
 
 .alertContainer.showen{
-   bottom: 20px;
+   top: 140px;
+}
+
+@media (min-width: 768px){
+   .container{
+      margin-top: 130px;
+   }
+
+   .card{
+      max-width: 700px;
+      padding: 30px;
+   }
+
+   .productPic{
+      max-width: 280px;
+   }
+
+   .name{
+      font-size: 1.8rem;
+   }
+
+   .price{
+      font-size: 1.35rem;
+   }
+
+}
+
+@media (min-width: 1024px){
+   .container{
+      margin-top: 150px;
+   }
+   
+   .card{
+      flex-direction: row;
+      text-align: left;
+      max-width: 900px;
+      gap: 40px;
+   }
+
+   .imageWrapper{
+      width: 40%;
+   }
+
+   .info{
+      width: 60%;
+   }
+
+   .productPic{
+      max-width: 300px;
+   }
+
+   .name{
+      font-size: 2rem;
+   }
+
+   .price{
+      font-size: 1.4rem;
+   }
 }

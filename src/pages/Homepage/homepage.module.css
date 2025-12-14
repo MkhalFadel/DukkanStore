@@ -2,17 +2,17 @@
    flex: 1 !important;
    min-height: 0;
    display: grid;
-   grid-template-columns: 1fr 1fr 1fr 1fr;
-   justify-content: space-between;
-   gap: 40px 80px;
+   grid-template-columns: 1fr 1fr;
+   gap: 25px;
    align-items: center;
    width: 90%;
-   margin: 190px auto;
+   margin: 200px auto;
 }
 
 .itemCard{
    background-color: var(--cardBackgroundColor);
-   width: 225px;
+   width: 100%;
+   max-width: 260px;
    height: 382px;
    border: 1px solid var(--cardShadow);
    box-shadow: var(--navShadow);
@@ -22,10 +22,12 @@
    align-items: center;
    justify-content: space-between;
    text-align: center;
+   cursor: pointer;
+   margin: 0 auto;
+
    animation: identifier linear forwards;
    animation-timeline: view();
    animation-range: entry 0%;
-   cursor: pointer;
 }
 
 @keyframes identifier{
@@ -35,7 +37,7 @@
    }
    to{
       opacity: 1;
-      transform: translateX(0px) scale(1);
+      transform: translateY(0) scale(1);
    }
 }
 
@@ -43,29 +45,29 @@
    border-top-right-radius: 7px;
    border-top-left-radius: 7px;
    width: 100%;
-   height: 100%;
+   height: 200px;
    object-fit: cover;
-   max-height: 225px;
 }
 
 .itemName{
    width: 95%;
    margin: 5px auto 0;
-   font-size: 1.1rem;
+   font-size: 1.05rem;
 }
 
 .itemPrice{
-   font-size: 1.1rem;
-   margin: 5px 0 0 ;
+   font-size: 1.05rem;
+   margin: 5px 0 0;
 }
 
+/* ✅ BUTTON – EXACT SAME STYLES */
 .addBtn{
    margin: 5px 0 15px;
    border: none;
    background-color: var(--buttonBackgroundColor);
    color: var(--buttonTextColor);
    border-radius: 40px;
-   width: 60%;
+   width: 85%;
    height: 40px;
    cursor: pointer;
    z-index: 2;
@@ -79,6 +81,7 @@
    background-color: var(--buttonActiveBackgroundColor);
 }
 
+/* Loader */
 .loader{
    width: 100%;
    height: 100%;
@@ -90,21 +93,23 @@
    position: absolute;
 }
 
+/* No results */
 .noResultsImg{
-   width: 350px;
-   height: 350px;
+   width: 280px;
+   height: 280px;
    top: 100px;
    align-self: center;
    position: absolute;
    background-color: transparent !important;
 }
 
+/* Alert */
 .alertContainer{
    display: flex;
    justify-content: center;
    width: 100%;
    position: fixed;
-   top: 50px;
+   top: 0px;
    z-index: 100;
    transition: all ease-in-out 0.25s;
 }
@@ -112,3 +117,43 @@
 .alertContainer.showen{
    top: 130px;
 }
+
+@media (min-width: 600px){
+   .container{
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      width: 90%;
+   }
+
+   .itemCard{
+      max-width: 240px;
+   }
+
+   .itemPic{
+      height: 210px;
+   }
+}
+
+@media (min-width: 900px){
+   .container{
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+   }
+
+   .itemCard{
+      max-width: 225px;
+   }
+
+   .itemPic{
+      height: 225px;
+   }
+}
+
+@media (min-width: 1200px){
+   .container{
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px 80px;
+      width: 90%;
+   }
+}
+

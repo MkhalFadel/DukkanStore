@@ -21,10 +21,16 @@
    transition: 0.3s;
 }
 
-.row, .rowCenter {
+.row,
+.rowCenter {
    display: flex;
    gap: 15px;
    width: 100%;
+}
+
+.row{
+   flex-direction: column;
+   height: 100%;
 }
 
 .rowCenter {
@@ -32,7 +38,9 @@
 }
 
 /* Inputs */
-.input, .select, .file {
+.input,
+.select,
+.file {
    flex: 1;
    height: 40px;
    border-radius: 12px;
@@ -82,19 +90,32 @@
    border-color: var(--accent);
 }
 
-/* Table */
+/* ============================= */
+/* TABLE FIX (IMPORTANT PART) */
+/* ============================= */
+
+.tableWrapper {
+   width: 100%;
+   overflow-x: auto;
+}
+
+/* Keep table layout intact */
 .table {
    width: 100%;
+   min-width: 900px;
    border-collapse: collapse;
    font-size: 1rem;
 }
 
-th, td {
+th,
+td {
    padding: 12px;
    text-align: center;
    border-bottom: 1px solid var(--border);
+   white-space: nowrap;
 }
 
+/* Table buttons */
 .table button {
    width: 100%;
    padding: 7px 10px;
@@ -119,9 +140,17 @@ th, td {
    color: white;
 }
 
-.freezeBtn:hover { background: #067bbf; }
-.editBtn:hover { background: #009945; }
-.deleteBtn:hover { background: #b72822; }
+.freezeBtn:hover {
+   background: #067bbf;
+}
+
+.editBtn:hover {
+   background: #009945;
+}
+
+.deleteBtn:hover {
+   background: #b72822;
+}
 
 /* Alerts */
 .alert {
@@ -131,32 +160,8 @@ th, td {
    z-index: 5000;
 }
 
-/* Loader */
-.loader {
-   width: 100%;
-   display: flex;
-   justify-content: center;
-   padding: 30px 0;
-}
-
-/* Theme Values */
-:root {
-   --cardBg: rgba(0,0,0,0.25);
-   --inputBg: rgba(0,0,0,0.55);
-   --border: rgba(255,255,255,0.2);
-   --accent: rgb(0,110,255);
-   --accentDark: rgb(0,90,210);
-   --shadow: 0 4px 25px rgba(0,0,0,0.25);
-}
-
-[data-theme="light"] {
-   --cardBg: #fff;
-   --inputBg: #f1f1f1;
-   --border: #ddd;
-   --shadow: 0 4px 25px rgba(0,0,0,0.1);
-}
-
-.errorAlerts{
+/* Error Alerts */
+.errorAlerts {
    position: absolute;
    top: -150px;
    width: 100%;
@@ -168,6 +173,81 @@ th, td {
    background-color: transparent;
 }
 
-.errorAlerts.active{
+.errorAlerts.active {
    top: 10px;
+}
+
+/* Loader */
+.loader {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   padding: 30px 0;
+}
+
+/* Theme Variables */
+:root {
+   --cardBg: rgba(0, 0, 0, 0.25);
+   --inputBg: rgba(0, 0, 0, 0.55);
+   --border: rgba(255, 255, 255, 0.2);
+   --accent: rgb(0, 110, 255);
+   --accentDark: rgb(0, 90, 210);
+   --shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] {
+   --cardBg: #fff;
+   --inputBg: #f1f1f1;
+   --border: #ddd;
+   --shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+   .card {
+      width: 88%;
+      padding: 25px;
+   }
+
+   .row,
+   .rowCenter {
+      flex-direction: row;
+   }
+
+   .toggleBtn {
+      width: auto;
+      padding: 10px 20px;
+   }
+
+   .table {
+      display: table;
+      font-size: 1rem;
+   }
+
+   .table thead {
+      display: table-header-group;
+   }
+
+   .table tbody tr {
+      display: table-row;
+      border-bottom: 1px solid var(--border);
+   }
+
+   .table td,
+   .table th {
+      padding: 12px;
+   }
+}
+
+@media (min-width: 1024px) {
+   .card {
+      width: 85%;
+   }
+
+   .row {
+      gap: 15px;
+   }
+
+   .table button {
+      width: 100%;
+   }
 }

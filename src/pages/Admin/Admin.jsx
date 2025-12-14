@@ -294,23 +294,25 @@ export default function Admin({products, setProducts, isAdmin})
 
          {/* Products Table */}
          <div className={styles.card}>
-            <table className={styles.table}>
-               <thead>
-                  <tr>
-                     <th>ID</th>
-                     <th>Name</th>
-                     <th>Price</th>
-                     <th>Category</th>
-                     <th>Freeze</th>
-                     <th>Edit</th>
-                     <th>Delete</th>
-                  </tr>
-               </thead>
+            <div className={styles.tableWrapper}>
+               <table className={styles.table}>
+                  <thead>
+                     <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Freeze</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                     </tr>
+                  </thead>
 
-               <tbody>
-                  {products && displayProducts()}
-               </tbody>
-            </table>
+                  <tbody>
+                     {products && displayProducts()}
+                  </tbody>
+               </table>
+            </div>
 
             {loading && (
                <div className={styles.loader}>

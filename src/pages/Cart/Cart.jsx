@@ -65,19 +65,19 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
       <div key={i.id} className={styles.item}>
          <img src={i.image ?? notFound} className={styles.itemPic} />
          <div className={styles.itemInfo}>
-         <h3 className={styles.itemName}>{i.title}</h3>
-         <p className={styles.itemPrice}>${(Number(i.price) * i.quantity).toFixed(2)}</p>
+            <h3 className={styles.itemName}>{i.title}</h3>
+            <p className={styles.itemPrice}>${(Number(i.price) * i.quantity).toFixed(2)}</p>
 
-         <div className={styles.quantity}>
-            <p>Quantity: {i.quantity}</p>
-            {edit === i.id && <input 
-               type="number"
-               value={newQuantity}
-               placeholder="New quantity"
-               className={styles.quantityInput}
-               onChange={e => setNewQuantity(e.target.value)}
-            />}
-         </div>
+            <div className={styles.quantity}>
+               <p>Quantity: {i.quantity}</p>
+               {edit === i.id && <input 
+                  type="number"
+                  value={newQuantity}
+                  placeholder="New quantity"
+                  className={styles.quantityInput}
+                  onChange={e => setNewQuantity(e.target.value)}
+               />}
+            </div>
 
             <div className={styles.actions}>
                <button className={styles.deleteBtn} onClick={() => deleteItem(i.id)}>Delete</button>

@@ -1,83 +1,143 @@
-.sideBarContainer{
-   height: 100%;
-   z-index: 10000;
-   width: 100%;
-   transition: all ease-in-out 0.25s;
+/* ========================= */
+/* MOBILE FIRST (DEFAULT) */
+/* ========================= */
+
+.sideBarContainer {
    position: fixed;
-   top: 113px;
+   top: 85px; /* matches mobile navbar height */
    left: -200%;
-   background-color: rgba(0, 0, 0, 0.411);
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.45);
+   z-index: 10000;
+   transition: left 0.25s ease-in-out;
 }
 
-.sideBar{
+.sideBarContainer.open {
+   left: 0;
+}
+
+.sideBar {
    background-color: var(--navBackgroundColor);
-   height: 90vh;
-   width: 250px;
+   height: 100%;
+   width: 240px;
    display: flex;
    flex-direction: column;
    box-shadow: var(--navShadow);
 }
 
-.sideBarContainer.open{
-   left: 0 !important;
+/* Close Button */
+.closeBtn {
+   width: 60px;
+   height: 60px;
+   background-color: transparent;
+   border: none;
 }
 
-.closeBtn{
+.closeBtn img {
+   width: 100%;
+   height: 100%;
+}
+
+/* Title */
+.sideBar h3 {
+   font-size: 1.6rem;
+   margin: 10px;
+}
+
+/* Items */
+.sideBar span {
+   margin: 8px 0 0 15px;
+   font-size: 1rem;
+   padding: 6px;
+   cursor: pointer;
+   transition: 0.2s;
+}
+
+.sideBar span:hover,
+.sideBar span.checked {
+   border-left: 4px solid var(--primaryText);
+   background-color: rgba(0, 0, 0, 0.4);
+   width: 75%;
+   border-top-right-radius: 7px;
+   border-bottom-right-radius: 7px;
+}
+
+/* Open Button */
+.openButton {
+   position: fixed;
+   top: 95px;
+   left: -10px;
+   background-color: transparent;
+   border: none;
    width: 80px;
    height: 80px;
-   object-fit: contain;
-   background-color: transparent;
-   border: none;
+   z-index: 1000;
 }
 
-.closeBtn img{
-   height: 100%;
-   width: 100%;
-}
-
-.sideBar h3{
-   background-color: transparent;   
-   font-size: 2rem;
-   margin-top: 0px;
-   margin-left: 10px;
-}
-
-.sideBar span{
-   margin-top: 10px;
-   margin-left: 15px;
-   font-size: 1.1rem;
-   padding: 5px;
-   cursor: pointer;
-}
-
-.sideBar span:hover{
-   border-left: 5px solid var(--primaryText);
-   background-color: rgba(0, 0, 0, 0.418);
-   width: 70%;
-   border-top-right-radius: 7px;
-   border-bottom-right-radius: 7px;
-}
-
-.sideBar span.checked{
-   border-left: 5px solid var(--primaryText);
-   background-color: rgba(0, 0, 0, 0.418);
-   width: 70%;
-   border-top-right-radius: 7px;
-   border-bottom-right-radius: 7px;
-}
-
-.openButton{
-   position: fixed;
-   top: 100px;
-   left: -10px;
-   object-fit: contain;
-   background-color: transparent;
-   border: none;
-   width: 100px;
-   height: 100px;
-}
-
-.openButton img{
+.openButton img {
    width: 100%;
    height: 100%;
+}
+
+/* ========================= */
+/* TABLETS (≥ 768px) */
+/* ========================= */
+
+@media (min-width: 768px) {
+   .sideBarContainer {
+      top: 95px;
+   }
+
+   .openButton {
+      width: 90px;
+      height: 90px;
+   }
+}
+
+/* ========================= */
+/* LAPTOPS & DESKTOP (≥ 1024px) */
+/* EXACT ORIGINAL STYLE */
+/* ========================= */
+
+@media (min-width: 1024px) {
+   .sideBarContainer {
+      top: 113px; /* EXACT original value */
+      background-color: rgba(0, 0, 0, 0.411);
+   }
+
+   .sideBar {
+      height: 90vh;
+      width: 250px;
+   }
+
+   .closeBtn {
+      width: 80px;
+      height: 80px;
+   }
+
+   .sideBar h3 {
+      font-size: 2rem;
+      margin-top: 0;
+      margin-left: 10px;
+   }
+
+   .sideBar span {
+      margin-top: 10px;
+      margin-left: 15px;
+      font-size: 1.1rem;
+      padding: 5px;
+   }
+
+   .sideBar span:hover,
+   .sideBar span.checked {
+      width: 70%;
+      border-left: 5px solid var(--primaryText);
+   }
+
+   .openButton {
+      top: 100px;
+      width: 100px;
+      height: 100px;
+   }
 }

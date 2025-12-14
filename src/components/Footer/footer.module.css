@@ -1,71 +1,122 @@
-.footer{
+.footer {
    width: 100%;
-   height: 170px;
    background-color: var(--navBackgroundColor);
    box-shadow: var(--navShadow);
+   padding: 25px 20px;
 }
 
-.infoFooter{
+.infoFooter {
    display: flex;
-   align-items: baseline;
-   justify-content: center;
-   padding-top: 25px;
+   flex-direction: column;
+   gap: 25px;
 }
 
-.infoFooter div{
+.infoFooter div {
    display: flex;
    flex-direction: column;
 }
 
-.infoFooter div a{
+.infoFooter div a {
    text-decoration: none;
    color: var(--primaryText);
    display: flex;
    align-items: center;
-   justify-content: start;
+   gap: 8px;
    margin-top: 10px;
 }
 
-.left{
-   width: 50%;
+.left p {
+   margin-top: 8px;
 }
 
-.left p{
-   margin-top: 10px;
-}
-
-.right{
-   align-items: baseline;
-   justify-content: center;
-   flex-direction: row !important;
-}
-
-.socialsContainer{
-   align-items: center;
-}
-
-.socialsContainer a{
-   margin-top: 0px !important;
-}
-
-.pagesContainer{
+.right {
    display: flex;
-   align-items: center;
-   margin-left: 100px;
+   flex-direction: column;
+   gap: 25px;
 }
 
-.infoFooter div a:hover{
+.socialsContainer {
+   display: flex;
+   flex-direction: column;
+}
+
+.socialsContainer a {
+   margin-top: 5px;
+}
+
+.pagesContainer {
+   display: flex;
+   flex-direction: column;
+   margin-left: 0;
+}
+
+.igIcon {
+   width: 30px;
+   height: 30px;
+}
+
+.fbIcon {
+   width: 35px;
+   height: 35px;
+}
+
+.infoFooter div a:hover {
    color: blue;
 }
 
-.igIcon
-{
-   width: 30px;
-   height: 30px;
-   margin: 0;
+@media (min-width: 768px) {
+   .infoFooter {
+      flex-direction: row;
+      justify-content: center;
+      align-items: baseline;
+   }
+
+   .left {
+      width: 50%;
+   }
+
+   .right {
+      flex-direction: row;
+      align-items: baseline;
+   }
+
+   .pagesContainer {
+      margin-left: 40px;
+   }
 }
 
-.fbIcon{
-   width: 35px;
-   height: 35px;
+@media (min-width: 1024px) {
+   .footer {
+      height: 170px;
+      padding: 0;
+   }
+
+   .infoFooter {
+      padding-top: 25px;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: center;
+   }
+
+   .left {
+      width: 50%;
+   }
+
+   .right {
+      flex-direction: row !important;
+      align-items: baseline;
+      justify-content: center;
+   }
+
+   .pagesContainer {
+      margin-left: 100px;
+   }
+
+   .socialsContainer {
+      align-items: center;
+   }
+
+   .socialsContainer a {
+      margin-top: 0 !important;
+   }
 }
