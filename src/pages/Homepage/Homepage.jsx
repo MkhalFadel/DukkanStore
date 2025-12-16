@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router'
 import ScrollTop from '../../components/scrollTop/ScrollTop.jsx'
 import { SuccessAlert } from '@mkhalfadel/modoui-core'
 import Sorting from '../../components/Sorting/Sort.jsx'
+import { saveSession } from '../../utils/sessionStorage.js'
 
 export default function Homepage({
                                  theme,
@@ -62,6 +63,7 @@ export default function Homepage({
    {
       const product = products?.filter(p => p.id === id);
       setProductDetails(product[0]);
+      saveSession(product[0], 'product');
       navigate('/details')
    }
 

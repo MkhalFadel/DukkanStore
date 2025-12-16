@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import { addProducts, fetchProducts, updateProduct, deleteProduct } from '../../API/products';
 import { SuccessAlert, WarningAlert, PrimaryAlert, DotPulseLoader, ErrorAlert } from '@mkhalfadel/modoui-core';
 import ScrollTop from '../../components/scrollTop/ScrollTop'
-import { validateInput } from '../../inputValidation';
+import { validateInput } from '../../utils/inputValidation';
 import { useNavigate } from 'react-router';
 import { nanoid } from 'nanoid';
 

@@ -1,7 +1,7 @@
 import styles from './darkmode.module.css';
 import moonIcon from '../../assets/icons/moon.svg';
 import sunIcon from '../../assets/icons/sun.svg';
-import { saveStorage } from '../../localStorage';
+import { saveStorage } from '../../utils/localStorage';
 
 export default function Darkmode({theme, setTheme})
 {

@@ -1,7 +1,7 @@
 import styles from './login.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { DEMO_KEY } from '../../../demoPassword';
+import { DEMO_KEY } from '../../../utils/demoPassword';
 
 export default function Login({setIsAdmin}) {
    const [password, setPassword] = useState(""); // Store password input value

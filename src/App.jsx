@@ -5,7 +5,8 @@ import Details from "./pages/Details/Details.jsx";
 import Admin from "./pages/Admin/Admin.jsx";
 import Login from "./pages/Admin/adminLogin/Login.jsx";
 import { useEffect, useState } from "react";
-import { getStorage, saveStorage } from "./localStorage.js";
+import { getStorage, saveStorage } from "./utils/localStorage.js";
+import { getSession } from "./utils/sessionStorage.js";
 
 export default function App()
 {
@@ -15,7 +16,10 @@ export default function App()
   }); // For dark / light theme options
   const [sidebar, setSidebar] = useState(false); // Show / Hide sidebar
   const [products, setProducts] = useState(); // Stores the products
-  const [productDetails, setProductDetails] = useState(); // Stores the clicked on product to dispaly its details
+  const [productDetails, setProductDetails] = useState(() => {
+    const product = getSession('product');
+    return product ? product : null;
+  }); // Stores the clicked on product to dispaly its details
   const [isAdmin, setIsAdmin] = useState(false); // Checks if the user is admin or not
   const [cart, setCart] = useState(() => {
     const data = getStorage('cart');

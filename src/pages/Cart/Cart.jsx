@@ -8,9 +8,8 @@ import emptyCart from '../../assets/emptyCart.svg';
 import { useEffect, useState } from 'react'
 import whatsappIcon from '../../assets/whatsapp icon.svg'
 import ScrollTop from '../../components/scrollTop/ScrollTop.jsx'
-import { saveStorage } from '../../localStorage.js'
+import { saveStorage, clearStorage } from '../../utils/localStorage.js'
 import Popup from '../../components/PopUp/Popup.jsx'
-import { clearStorage } from '../../localStorage.js'
 
 export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCart})
 {
