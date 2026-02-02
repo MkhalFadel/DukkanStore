@@ -13,6 +13,7 @@ import ScrollTop from '../../components/scrollTop/ScrollTop.jsx'
 import { SuccessAlert } from '@mkhalfadel/modoui-core'
 import Sorting from '../../components/Sorting/Sort.jsx'
 import { saveSession } from '../../utils/sessionStorage.js'
+import { test } from '../../API/products.js'
 
 export default function Homepage({
                                  theme,
@@ -44,6 +45,8 @@ export default function Homepage({
 
          return arr;
       }
+
+      test();
 
    useEffect(() => {
       async function loadProducts()

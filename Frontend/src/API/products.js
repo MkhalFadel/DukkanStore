@@ -1,5 +1,12 @@
 const API_URL = 'https://6923368a09df4a492324b26f.mockapi.io/dukkan/';
 
+export async function test()
+{
+   const res = await fetch("http://localhost:5000/api/test/");
+   const data = await res.json();
+   console.log(data);
+}
+
 export async function addProducts(pId, title, price, category, image)
 {
    try{
