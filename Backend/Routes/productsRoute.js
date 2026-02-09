@@ -16,14 +16,14 @@ router.get("/", async (req, res) => {
    }
 })
 
-router.post('/', async(req, res) => {
-   try {
-      const data = await createProduct(req.body);
-      res.status(201).json({data: data});
-   } catch (error) {
-      res.status(400).json({msg: "failed to create product", error: error.message});
-   }
-})
+// router.post('/', async(req, res) => {
+//    try {
+//       const data = await createProduct(req.body);
+//       res.status(201).json({data: data});
+//    } catch (error) {
+//       res.status(400).json({msg: "failed to create product", error: error.message});
+//    }
+// })
 
 router.post("/upload", upload.single("image"), async (req, res) => {
    try {

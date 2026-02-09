@@ -10,7 +10,7 @@ export async function addProducts(id, title, price, category, image)
       formData.append("category", category);
       formData.append("image", image);
 
-      const res = await fetch(`${API_URL}/upload`, {
+      const res = await fetch(`${API_URL}/api/products/upload`, {
          method: 'POST',
          body: formData
       })
@@ -25,7 +25,7 @@ export async function addProducts(id, title, price, category, image)
 export async function fetchProducts()
 {
    try{
-      const res = await fetch(`${API_URL}`);
+      const res = await fetch(`${API_URL}/api/products`);
       // console.log(await res.json())
       return await res.json();
    }  
@@ -37,7 +37,7 @@ export async function fetchProducts()
 export async function deleteProduct(id)
 {
    try{
-      const res = await fetch(`${API_URL}/${id}`, {
+      const res = await fetch(`${API_URL}/api/products/${id}`, {
          method: 'DELETE'
       })
       return res.ok;
@@ -59,7 +59,7 @@ export async function updateProduct(id, data)
    if(data.image_url)
       formData.append("image", data.image_url);
 
-   const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+   const res = await fetch(`${API_URL}/api/products/${id}`, {
       method: 'PUT',
       body: formData
    });
