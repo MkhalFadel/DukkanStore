@@ -6,7 +6,7 @@ const errorMessages ={
 }
 
 // Check passed value for invalid input
-export function validateInput(name, price, img)
+export function validateInput(state, name, price, img)
 {
    const errors = {};
 
@@ -16,8 +16,9 @@ export function validateInput(name, price, img)
    if(price < 0)
       errors.price = errorMessages.negativeValue;
 
-   if(!img)
-      errors.image = errorMessages.emptyImage;
+   if(state === 'adding')
+      if(!img)
+         errors.image = errorMessages.emptyImage;
 
    return errors
 }

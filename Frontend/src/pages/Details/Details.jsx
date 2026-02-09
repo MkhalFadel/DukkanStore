@@ -47,7 +47,7 @@ export default function Details({theme, setTheme, sidebar, setSidebar, productDe
                
                <div className={styles.imageWrapper}>
                   <img 
-                     src={productDetails.image ? productDetails.image : notFound}
+                     src={productDetails.image_url ? productDetails.image_url : notFound}
                      alt={productDetails.title}
                      className={styles.productPic}
                   />

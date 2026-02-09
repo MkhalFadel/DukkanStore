@@ -13,7 +13,6 @@ import ScrollTop from '../../components/scrollTop/ScrollTop.jsx'
 import { SuccessAlert } from '@mkhalfadel/modoui-core'
 import Sorting from '../../components/Sorting/Sort.jsx'
 import { saveSession } from '../../utils/sessionStorage.js'
-import { test } from '../../API/products.js'
 
 export default function Homepage({
                                  theme,
@@ -46,13 +45,12 @@ export default function Homepage({
          return arr;
       }
 
-      test();
 
    useEffect(() => {
       async function loadProducts()
       {
          const data = await fetchProducts();
-         const productsData = data || [];
+         const productsData = data.data || [];
          const shuffled = shuffleProducts(productsData); // Shuffle productsData using Fisher–Yates algorithem before setting state
          setProducts(shuffled)
          setLoading(false);
@@ -98,7 +96,7 @@ export default function Homepage({
       
       return filteredProducts?.map(p => (
          <div className={styles.itemCard} key={p.id} onClick={() => getProductDetails(p.id)}>
-            <img src={p.image ? p.image : notFound} className={styles.itemPic} style={{borderBottom: theme === 'light' ? "0.5px solid black" : ""}} />
+            <img src={p.image_url ? p.image_url : notFound} className={styles.itemPic} style={{borderBottom: theme === 'light' ? "0.5px solid black" : ""}} />
             <p className={styles.itemName}>{p.title}</p>
             <p className={styles.itemPrice}>${p.price}</p>
             <button className={styles.addBtn} onClick={e => {addToCart(p.id, e); showAlert()}}>Add to Cart</button>

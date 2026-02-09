@@ -62,7 +62,7 @@ export default function Cart({theme, setTheme, sidebar, setSidebar, cart, setCar
    // Create the cart's items Elements
    const cartEl = cart && cart.map(i => (
       <div key={i.id} className={styles.item}>
-         <img src={i.image ?? notFound} className={styles.itemPic} />
+         <img src={i.image_url ?? notFound} className={styles.itemPic} />
          <div className={styles.itemInfo}>
             <h3 className={styles.itemName}>{i.title}</h3>
             <p className={styles.itemPrice}>${(Number(i.price) * i.quantity).toFixed(2)}</p>

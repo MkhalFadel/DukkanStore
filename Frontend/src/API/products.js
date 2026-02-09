@@ -1,33 +1,33 @@
-const API_URL = 'https://6923368a09df4a492324b26f.mockapi.io/dukkan/';
+const API_URL = 'http://localhost:5000/api/products';
 
-export async function test()
+export async function addProducts(id, title, price, category, image)
 {
-   const res = await fetch("http://localhost:5000/api/test/");
-   const data = await res.json();
-   console.log(data);
-}
+   try {
+      const formData = new FormData();
+      formData.append("id", id);
+      formData.append("title", title);
+      formData.append("price", price);
+      formData.append("category", category);
+      formData.append("image", image);
 
-export async function addProducts(pId, title, price, category, image)
-{
-   try{
-         const res = await fetch(`${API_URL}/Products`,{
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({pId, title, price, category, image})
-         }) 
-         return res.ok;
-   }
-   catch(err)
-   {
-      console.log(err)
+      const res = await fetch(`${API_URL}/upload`, {
+         method: 'POST',
+         body: formData
+      })
+      
+      return await res.json();
+      
+   } catch (error) {
+      console.log(error);
    }
 }
 
 export async function fetchProducts()
 {
    try{
-      const res = await fetch(`${API_URL}/Products`)
-      return res.json();
+      const res = await fetch(`${API_URL}`);
+      // console.log(await res.json())
+      return await res.json();
    }  
    catch(err){
       console.log(err);
@@ -37,7 +37,7 @@ export async function fetchProducts()
 export async function deleteProduct(id)
 {
    try{
-      const res = await fetch(`${API_URL}/Products/${id}`, {
+      const res = await fetch(`${API_URL}/${id}`, {
          method: 'DELETE'
       })
       return res.ok;
@@ -48,19 +48,21 @@ export async function deleteProduct(id)
    }
 }
 
-export async function updateProduct({id, title, price, category, image, isFrozen})
+export async function updateProduct(id, data)
 {
-   try{
-      const res = await fetch(`${API_URL}/Products/${id}`,{
-         method: 'PUT',
-         headers: {"Content-Type": "application/json"},
-         body: JSON.stringify({title: title, price: price, category: category, image: image, isFrozen: isFrozen})
-      }) 
-      
-      return res.ok;
-   }
-   catch(err)
-   {
-      console.log(err);
-   }
+   const formData = new FormData();
+
+   Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value)
+   })
+
+   if(data.image_url)
+      formData.append("image", data.image_url);
+
+   const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+      method: 'PUT',
+      body: formData
+   });
+
+   return await res.json();
 }

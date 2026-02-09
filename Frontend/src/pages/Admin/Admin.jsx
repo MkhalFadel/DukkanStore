@@ -9,10 +9,10 @@ import { nanoid } from 'nanoid';
 
 export default function Admin({products, setProducts, isAdmin})
 {
-   const [product, setProduct] = useState({id: "", pId: "", title: "", price: 0, category: "Plastics", image: ""})
+   const [product, setProduct] = useState({id: "", title: "", price: 0, category: "Plastics", image: ""})
    const [productState, setProductState] = useState('adding');
    const [displayFrozen, setDisplayFrozen] = useState(false); // Check if the products displayed are the frozen one or not
-   const [search, setSearch] = useState(""); // Search for a products
+   const [search, setSearch] = useState(); // Search for a products
    const [searchState, setSearchState] = useState('name'); // Decide if the search will be by the name or id
    const [loading, setLoading] = useState(true); // Hide loader after fetching Products
    const [alert, setAlert] = useState({adding: false, deleting: false, updating: false}) // Hide/Display Alert messages
@@ -28,24 +28,19 @@ export default function Admin({products, setProducts, isAdmin})
       async function loadProducts()
       {
          const data = await fetchProducts();
-         const productsData = data || [];
+         const productsData = await data.data || [];
          setProducts(productsData);
          setLoading(false)
+         console.log(productsData)
       }
+
       loadProducts();
    }, [])
 
    // Take the image object and convert it into base64 to store
    function handleImageUpload(e)
    {
-      const file = e.target.files[0];
-
-      const reader = new FileReader();
-      reader.onloadend = () => {
-         setProduct(p => ({...p, image: reader.result}));
-      }
-
-      reader.readAsDataURL(file);
+      setProduct(p => ({...p, image: e.target.files[0]}))
    }
 
    // Display products
@@ -54,27 +49,27 @@ export default function Admin({products, setProducts, isAdmin})
       let filterdProducts;
 
       if(displayFrozen)
-         filterdProducts = products.filter(p => p.isFrozen);
+         filterdProducts = products.filter(p => p.is_frozen);
       else if(!displayFrozen)
-         filterdProducts = products.filter(p => !p.isFrozen)
+         filterdProducts = products.filter(p => !p.is_frozen)
 
       if(search)
          filterdProducts = searchState === 'name' ? filterdProducts.filter(p => p.title.toLowerCase().includes(search.toLocaleLowerCase())):
-                                                   filterdProducts.filter(p => p.pId.toLowerCase().includes(search.toLocaleLowerCase()))
+                                                   filterdProducts.filter(p => String(p.id).includes(String(search)))
 
 
       return filterdProducts.map(p => (
-         <tr key={p.pId}>
-            <td>{p.pId}</td>
+         <tr key={p.id}>
+            <td>{p.id}</td>
             <td>{p.title}</td>
             <td>{p.price}</td>
             <td>{p.category}</td>
             <td>
-               <button className={styles.freezeBtn} onClick={() => handleFreezing(p.id, p.isFrozen)}>
-                  {p.isFrozen ? "Unfreeze" : "Freeze"}
+               <button className={styles.freezeBtn} onClick={() => handleFreezing(p.id, p.is_frozen)}>
+                  {p.is_frozen ? "Unfreeze" : "Freeze"}
                </button>
             </td>
-            <td><button className={styles.editBtn} onClick={() => handleProductUpdate(p.pId)}>Edit</button></td>
+            <td><button className={styles.editBtn} onClick={() => handleProductUpdate(p.id)}>Edit</button></td>
             <td><button className={styles.deleteBtn} onClick={() => handleDeleting(p.id)}>Delete</button></td>
          </tr>
       ))
@@ -85,11 +80,11 @@ export default function Admin({products, setProducts, isAdmin})
    {
       scroll({top: 0, behavior: 'smooth'})
       setProductState('editing')
-      const productToUpdate = products.filter(p => p.pId === id);
+      const productToUpdate = products.filter(p => p.id === id);
       console.log(productToUpdate[0])
+      console.log("ID:", id);
       setProduct(() => ({
                         id: productToUpdate[0].id,
-                        pId: productToUpdate[0].pId,
                         title: productToUpdate[0].title,
                         price: productToUpdate[0].price,
                         category: productToUpdate[0].category,
@@ -124,17 +119,20 @@ export default function Admin({products, setProducts, isAdmin})
    // Decide what to do depending on if the user wants to update or add a products
    async function handleProduct()
    {
-      const itemId = products.filter(p => p.pId === product.pId);
+      const itemId = products.filter(p => p.id === product.id);
       if(productState === 'adding'){
          const ID = nanoid();
          const adding = await addProducts(ID, product.title, Number(product.price).toFixed(2), product.category, product.image)
-         setProducts(p => ([...p, {...product, pId: ID}]))
-         adding && setProduct(() => ({pId: "", title: "", price: 0, image: '', category: 'Plastics'}))
+         setProducts(p => ([...p, {...product, id: ID}]))
+         adding && setProduct(() => ({id: "", title: "", price: 0, image: '', category: 'Plastics'}))
          adding && handleAlerts("adding")
       }
       else{
-         const updating = updateProduct({id: product.id, title: product.title, price: Number(product.price).toFixed(2), category: product.category, image: product.image});
-         setProducts(products.filter(p => p.pId !== itemId[0].pId));
+         const updating = await updateProduct(product.id, {title: product.title, 
+                                                            price: product.price,
+                                                            category: product.category,
+                                                            image: product.image});
+         setProducts(products.filter(p => p.id !== itemId[0].id));
          setProducts(prev => ([...prev, product]))
          setProduct(() => ({title: "", price: 0, image: '', category: 'Plastics'}))
          setProductState('adding')
@@ -145,7 +143,13 @@ export default function Admin({products, setProducts, isAdmin})
    // Validates the input value for proudcts and checks if values are valid
    function handleForm()
    {
-      const validationErrors = validateInput(product.title, Number(product.price), product.image);
+      let validationErrors;
+      if(productState === 'adding')
+         validationErrors = validateInput("adding", product.title, Number(product.price), product.image);
+      else
+         validationErrors = validateInput("editing", product.title, Number(product.price));
+
+
       if(Object.keys(validationErrors).length > 0)
       {
          setErrors(validationErrors);
@@ -165,10 +169,10 @@ export default function Admin({products, setProducts, isAdmin})
    }
 
    // Handles Freezing a product
-   async function handleFreezing(id, isFrozen)
+   async function handleFreezing(id, is_frozen)
    {
-      const frezzing = updateProduct({id, isFrozen: !isFrozen});
-      frezzing && setProducts(product => product.map(p => p.pId === id ? {...p, isFrozen: !isFrozen} : p))
+      const frezzing = updateProduct(id, {is_frozen: !is_frozen});
+      frezzing && setProducts(product => product.map(p => p.id === id ? {...p, is_frozen: !is_frozen} : p))
       frezzing && handleAlerts("updating");
    }
 
